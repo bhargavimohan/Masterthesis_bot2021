@@ -23,8 +23,9 @@ from adaptive_card_helper import (
 )
 
 from tinydb import TinyDB, Query, where
+from tinydb.operations import delete
 db = TinyDB('database.json')
-table = db.table('Initializedchanels')
+table = db.table('Initializedchannelsanddata')
 ch = Query()
 
 
@@ -34,24 +35,28 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
         text_command = turn_context._activity.text
         channel_name = turn_context._activity.recipient.name
         
-        D3driverinitcommand = '<at>Preview Messaging Extension</at> initialize\n'
-        D3driverdelcommand = '<at>Preview Messaging Extension</at> delete\n'         
+        D3driverinitcommand = '<at>D3driver</at> init\n'
+        D3driverdelcommand = '<at>D3driver</at> del\n'         
         value = turn_context.activity.value
-
+       
         if value is not None:
             vmodelname = value["Choices"] if "Choices" in value else ""
-
-            result = table.search(ch[channel_name].exists())
+            member = turn_context._activity.from_property.name
+            year = str(turn_context._activity.local_timestamp.year)
+            month = str(turn_context._activity.local_timestamp.month)
+            day = str(turn_context._activity.local_timestamp.day)
+            cardsentdate = year + "-" + month + "-" + day
+            result = table.search(ch['channel']['name'] == channel_name)
             if(len(result) == 0):
-                table.insert({channel_name: vmodelname})
+                table.insert({'channel': {'name' : channel_name ,'vmodel' : vmodelname, 'membername' : member, 'date' : cardsentdate}})
                 reply = MessageFactory.text(
                     f"{turn_context.activity.from_property.name} chose '{vmodelname}'."
                 )
                 await turn_context.send_activity(reply)
             else:
                 reply = MessageFactory.text(
-                    "Model '{}' already exists for Channel '{}', please delete and reset if required.".format(
-                        result[0][channel_name],
+                    "Model '{}' has been selected for Channel '{}', please use command '@D3driver delete' and reset if required.".format(
+                        result[0]["channel"]["vmodel"],
                         channel_name)
                 )
                 await turn_context.send_activity(reply)
@@ -69,10 +74,10 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                         
 
         elif text_command == D3driverdelcommand:
-            table.remove(where(channel_name) == 'Domain-specific')
+            table.remove(where('channel').name == channel_name)
             reply = MessageFactory.text(
             "This channel is no more initialized. To re-initialize the channel, please enter "
-            "@Preview Messaging Extension initialize"
+            "@D3driver init"
             )
             await turn_context.send_activity(reply)
                     
