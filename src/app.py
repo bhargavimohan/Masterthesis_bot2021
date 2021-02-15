@@ -21,7 +21,10 @@ from config import DefaultConfig
 
 CONFIG = DefaultConfig()
 
-
+#("Hello! Congratulations on choosing one of the best practices of clean"
+# "documentation. The following two are useful commands:"
+# " '@D3driver init' - To start accessing decision cards"
+# " '@D3driver del'  - To reset the V-model process for the current channel")
 
 
 # Create adapter.
@@ -59,6 +62,7 @@ async def on_error(context: TurnContext, error: Exception):
 
 
 ADAPTER.on_turn_error = on_error
+
 
 # Create the Bot
 BOT = TeamsMessagingExtensionsActionPreviewBot()

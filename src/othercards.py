@@ -1,4 +1,4 @@
-def create_adaptive_card_editor(
+def create_modelbased_adaptive_card_editor(
     user_text: str = None,
     is_multi_select: bool = False,
     option1: str = None,
@@ -49,7 +49,7 @@ def create_adaptive_card_editor(
 
 
 
-    def create_adaptive_card_editor(
+    def create_incose_adaptive_card_editor(
     user_text: str = None,
     is_multi_select: bool = False,
     option1: str = None,
