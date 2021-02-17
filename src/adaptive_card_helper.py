@@ -4,7 +4,7 @@
 from botbuilder.core import CardFactory
 from botbuilder.schema import Attachment
 
-def create_modelbased_adaptive_card_editor(
+def create_ad_adaptive_card_editor(
     user_text1: str = None,
     user_text2: str = None,
     user_text3: str = None,
@@ -20,7 +20,7 @@ def create_modelbased_adaptive_card_editor(
             ],
             "body": [
                 {
-                    "text": "Here you can discuss Model-based design decisions",
+                    "text": "Here you can discuss Architectural Design decisions",
                     "type": "TextBlock",
                     "weight": "bolder",
                 },
@@ -53,7 +53,7 @@ def create_modelbased_adaptive_card_editor(
 
 
 
-def create_incose_adaptive_card_editor(
+def create_dc_adaptive_card_editor(
     user_text1: str = None,
     user_text2: str = None,
     user_text3: str = None,
@@ -69,7 +69,7 @@ def create_incose_adaptive_card_editor(
             ],
             "body": [
                 {
-                    "text": "Here you can discuss INCOSE design decisions",
+                    "text": "Here you can discuss Design/conceptual decisions",
                     "type": "TextBlock",
                     "weight": "bolder",
                 },
@@ -102,7 +102,7 @@ def create_incose_adaptive_card_editor(
 
 
 
-def create_domainspecific_adaptive_card_editor(
+def create_imp_adaptive_card_editor(
     user_text1: str = None,
     user_text2: str = None,
     user_text3: str = None,
@@ -118,7 +118,7 @@ def create_domainspecific_adaptive_card_editor(
             ],
             "body": [
                 {
-                    "text": "Here you can discuss Domain Specific design decisions",
+                    "text": "Here you can discuss Implementational design decisions",
                     "type": "TextBlock",
                     "weight": "bolder",
                 },
@@ -150,7 +150,7 @@ def create_domainspecific_adaptive_card_editor(
     )
 
 
-def create_vmodel_card_editor(
+def create_vphase_card_editor(
     user_text: str = None,
     is_multi_select: bool = False,
     option1: str = None,
@@ -169,23 +169,24 @@ def create_vmodel_card_editor(
 
                 "body": [
                     {
-                    "text": "Which V-model would you like to choose?",
+                    "text": "Which phase in the V-model would you like to document decisions?",
                     "type": "TextBlock",
                     "weight": "bolder",
+                    "wrap": True,
                 },
                     {
                         "choices": [
                             {
-                                "title": "Model-based standard",
-                                "value": "Model-based"
+                                "title": "Architecture Design",
+                                "value": "Architecture Design"
                             },
                             {
-                                "title": "INCOSE standard",
-                                "value": "INCOSE"
+                                "title": "Design/concept",
+                                "value": "Design/concept"
                             },
                             {
-                                "title": "Domain-specific standard",
-                                "value": "Domain-specific"
+                                "title": "Implementation",
+                                "value": "Implementation"
                             }   
                         ],
 			"id": "Choices",

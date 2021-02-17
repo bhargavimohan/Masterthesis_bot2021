@@ -16,11 +16,11 @@
   },
   "name": {
     "short": "D3driver",
-    "full": "Microsoft Teams Action Based Messaging Extension with Preview"
+    "full": "Design Decision Document driver"
   },
   "description": {
-    "short": "Sample demonstrating an Action Based Messaging Extension with Preview",
-    "full": "Sample Action Messaging Extension built with the Bot Builder SDK demonstrating Preview"
+    "short": "Bot that aids documenting design decisions",
+    "full": "Bot that aids documenting design decisions by installing a messaging extension and a tab"
   },
   "accentColor": "#FFFFFF",
   "bots": [

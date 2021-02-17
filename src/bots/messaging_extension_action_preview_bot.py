@@ -15,12 +15,12 @@ from botbuilder.schema.teams import (
 from botbuilder.core.teams import TeamsActivityHandler
 from example_data import ExampleData
 from adaptive_card_helper import (
-    create_domainspecific_adaptive_card_editor,
-    create_incose_adaptive_card_editor,
-    create_modelbased_adaptive_card_editor,
+    create_ad_adaptive_card_editor,
+    create_dc_adaptive_card_editor,
+    create_imp_adaptive_card_editor,
     create_adaptive_card_preview,
     create_error_card_editor,
-    create_vmodel_card_editor,
+    create_vphase_card_editor,
 
 )
 
@@ -35,74 +35,88 @@ ch = Query()
 
 class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
     async def on_message_activity(self, turn_context: TurnContext):
-        text_command = turn_context.activity.text        
-        D3driverinitcommand = '<at>D3driver</at> init\n'
-        D3driverdelcommand = '<at>D3driver</at> del\n'         
-        value = turn_context.activity.value
-        channel_name = turn_context.activity.conversation.name
-        if channel_name is None:
-            channel_name = 'General'
-        channel_id = turn_context.activity.channel_data['channel']['id']
-        conversation_id = turn_context.activity.conversation.id #to distinguish 'Generals' of different teams
-        if value is not None:
-            vmodelname = value["Choices"] if "Choices" in value else ""
-            member = turn_context.activity.from_property.name
-            year = str(turn_context.activity.local_timestamp.year)
-            month = str(turn_context.activity.local_timestamp.month)
-            day = str(turn_context.activity.local_timestamp.day)
-            cardsentdate = year + "-" + month + "-" + day
-            result = table.search(ch['channel']['channelid'] == channel_id)
-            if(len(result) == 0):
-                table.insert({'channel': {'channelid': channel_id, 'name' : channel_name ,'vmodel' : vmodelname, 'membername' : member, 'date' : cardsentdate}})
-                reply = MessageFactory.text(
-                    f"{turn_context.activity.from_property.name} chose '{vmodelname}' V-model process for this channel."
-                )
-                await turn_context.send_activity(reply)
-            else:
-                reply = MessageFactory.text(
-                    "V-Model process - '{}' has been selected for Channel '{}', please use command '@D3driver del' and reset if required.".format(
-                        result[0]["channel"]["vmodel"],
-                        channel_name)
-                )
-                await turn_context.send_activity(reply)
-
-        elif text_command == D3driverinitcommand:
-                    #vmodelname = 'Model-based'
-            result = table.search(ch['channel']['channelid'] == channel_id)
-            if(len(result) == 0):
-                card = create_vmodel_card_editor()
-                task_info = TaskModuleTaskInfo(
-                card=card, height=450, title="Design decision card", width=500
+         
+        if turn_context.activity.conversation.conversation_type != 'personal':
+            text_command = turn_context.activity.text        
+            D3driverinitcommand = '<at>D3driver</at> init\n'
+            D3driverdelcommand = '<at>D3driver</at> del\n' 
+            value = turn_context.activity.value
+            channel_name = turn_context.activity.conversation.name
+            if channel_name is None:
+                channel_name = 'General'
+            channel_id = turn_context.activity.channel_data['channel']['id']
+            conversation_id = turn_context.activity.conversation.id #to distinguish 'Generals' of different teams
+            if value is not None:
+                vphase = value["Choices"] if "Choices" in value else ""
+                member = turn_context.activity.from_property.name
+                year = str(turn_context.activity.local_timestamp.year)
+                month = str(turn_context.activity.local_timestamp.month)
+                day = str(turn_context.activity.local_timestamp.day)
+                cardsentdate = year + "-" + month + "-" + day
+                result = table.search(ch['channel']['channelid'] == channel_id)
+                if(len(result) == 0):
+                    table.insert({'channel': {'channelid': channel_id, 'name' : channel_name ,'vphase' : vphase, 'membername' : member, 'date' : cardsentdate}})
+                    reply = MessageFactory.text(
+                        f"{turn_context.activity.from_property.name} chose '{vphase}' phase for this channel."
                     )
-                message = MessageFactory.attachment(card)
-                response_id = await turn_context.send_activity(message)
-            else:
+                    await turn_context.send_activity(reply)
+                else:
+                    reply = MessageFactory.text(
+                        "The phase - '{}' in a V-model has been selected for Channel '{}', please use command '@D3driver del' and reset if required.".format(
+                            result[0]["channel"]["vphase"],
+                            channel_name)
+                    )
+                    await turn_context.send_activity(reply)
+
+            elif text_command == D3driverinitcommand:
+                        #vphase = 'Model-based'
+                result = table.search(ch['channel']['channelid'] == channel_id)
+                if(len(result) == 0):
+                    card = create_vphase_card_editor()
+                    task_info = TaskModuleTaskInfo(
+                    card=card, height=450, title="Design decision card", width=500
+                        )
+                    message = MessageFactory.attachment(card)
+                    response_id = await turn_context.send_activity(message)
+                else:
+                    reply = MessageFactory.text(
+                        "The phase - '{}' in a V-Model has been selected for Channel '{}', please use command '@D3driver del' and reset if required.".format(
+                            result[0]["channel"]["vphase"],
+                            channel_name)
+                    )
+                    await turn_context.send_activity(reply)
+                # new_activity = MessageFactory.text("This card has been disable")
+                # new_activity.id = response_id.id
+                # update_result = await turn_context.update_activity(new_activity)
+
+
+
+            elif text_command == D3driverdelcommand:
+                table.remove(where('channel').channelid == channel_id)
+                table1.remove(where('decisions').channelid == channel_id)
                 reply = MessageFactory.text(
-                    "V-Model process - '{}' has been selected for Channel '{}', please use command '@D3driver del' and reset if required.".format(
-                        result[0]["channel"]["vmodel"],
-                        channel_name)
+                "This channel is no more initialized. All the design decsions(if discussed) has been deleted from the database. To re-initialize the channel, please enter "
+                "@D3driver init"
                 )
                 await turn_context.send_activity(reply)
-            # new_activity = MessageFactory.text("This card has been disable")
-            # new_activity.id = response_id.id
-            # update_result = await turn_context.update_activity(new_activity)
 
-                        
-
-        elif text_command == D3driverdelcommand:
-            table.remove(where('channel').channelid == channel_id)
-            table1.remove(where('decisions').channelid == channel_id)
-            reply = MessageFactory.text(
-            "This channel is no more initialized. All the design decsions(if discussed) has been deleted from the database. To re-initialize the channel, please enter "
-            "@D3driver init"
-            )
-            await turn_context.send_activity(reply)
-                    
+            else:
+                reply = MessageFactory.text(
+                "Hello from ***D3driver!*** Congratulations on choosing one of the best practices of clean "
+                "documentation. Please follow apropriate instructions: "
+                "***'@D3driver init' - To start accessing decision cards*** and "
+                "***'@D3driver del'  - To reset the phase in which you would like to document your design decisions***"
+                )
+                await turn_context.send_activity(reply)
         else:
             reply = MessageFactory.text(
-            "Hello from D3driver! Please follow apropriate instructions."
+            "Hi there! Welcome to ***D3driver***. Congratulations on choosing one of the best practices of clean "
+            "documentation. Please follow apropriate instructions: "
+            "***'@D3driver init' - To start accessing decision cards*** and "
+            "***'@D3driver del'  - To reset the phase in which you would like to document your design decisions***"
             )
             await turn_context.send_activity(reply)
+            
         
 
     async def on_teams_messaging_extension_fetch_task(
@@ -114,25 +128,25 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
         channel_name = turn_context.activity.conversation.name
         if channel_name is None:
             channel_name = 'General'
-        #vmodelname = value["Choices"]
+        #vphase = value["Choices"]
         result = table.search(ch['channel']['channelid'] == channel_id)
         if(len(result) == 1):
-            if(result[0]["channel"]["vmodel"] == 'Model-based'):
-                card = create_modelbased_adaptive_card_editor()
+            if(result[0]["channel"]["vphase"] == 'Architecture Design'):
+                card = create_ad_adaptive_card_editor()
                 task_info = TaskModuleTaskInfo(
                     card=card, height=450, title="Design decision card", width=500
                 )
                 continue_response = TaskModuleContinueResponse(value=task_info)
                 return MessagingExtensionActionResponse(task=continue_response)
-            elif(result[0]["channel"]["vmodel"] == 'INCOSE'):
-                card = create_incose_adaptive_card_editor()
+            elif(result[0]["channel"]["vphase"] == 'Design/concept'):
+                card = create_dc_adaptive_card_editor()
                 task_info = TaskModuleTaskInfo(
                     card=card, height=450, title="Design decision card", width=500
                 )
                 continue_response = TaskModuleContinueResponse(value=task_info)
                 return MessagingExtensionActionResponse(task=continue_response)
-            elif(result[0]["channel"]["vmodel"] == 'Domain-specific'):
-                card = create_domainspecific_adaptive_card_editor()
+            elif(result[0]["channel"]["vphase"] == 'Implementation'):
+                card = create_imp_adaptive_card_editor()
                 task_info = TaskModuleTaskInfo(
                     card=card, height=450, title="Design decision card", width=500
                 )
@@ -165,15 +179,15 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
             channel_name = 'General'
         # result = table.search(ch['channel']['name'] == channel_name)
         result = table.search(ch['channel']['channelid'] == channel_id)
-        if(result[0]["channel"]["vmodel"] == 'Model-based'):
+        if(result[0]["channel"]["vphase"] == 'Architecture Design'):
             a="Functional design decision"
             b="Logical design decision"
             c="Physical design decision"
-        elif(result[0]["channel"]["vmodel"] == 'INCOSE'):
+        elif(result[0]["channel"]["vphase"] == 'Design/concept'):
             a="Design definition desisions"
             b="Design characteristics and enablers desicions"
             c="Design alterantives decisions"
-        elif(result[0]["channel"]["vmodel"] == 'Domain-specific'):
+        elif(result[0]["channel"]["vphase"] == 'Implementation'):
             a="Mechanical design decisions"
             b="Electrical design decisions"
             c="Software design decisions"
@@ -212,15 +226,15 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
         )
 
         # db entries
-        if(result[0]["channel"]["vmodel"] == 'Model-based'):
+        if(result[0]["channel"]["vphase"] == 'Architecture Design'):
             table1.insert({'decisions': {'channelid': channel_id, 'name' : channel_name , 'membername' : memberid, 
             'date' : decisiondate,'decisionname-a': a,'decision-a': user_text1[0],'decisionname-b': b,'decision-b': user_text2[0],
             'decisionname-c': c,'decision-c': user_text3[0]}})
-        elif(result[0]["channel"]["vmodel"] == 'INCOSE'):
+        elif(result[0]["channel"]["vphase"] == 'Design/concept'):
             table1.insert({'decisions': {'channelid': channel_id, 'name' : channel_name , 'membername' : memberid, 
             'date' : decisiondate,'decisionname-a': a,'decision-a': user_text1[0],'decisionname-b': b,'decision-b': user_text2[0],
             'decisionname-c': c,'decision-c': user_text3[0]}})
-        elif(result[0]["channel"]["vmodel"] == 'Domain-specific'):
+        elif(result[0]["channel"]["vphase"] == 'Implementation'):
             table1.insert({'decisions': {'channelid': channel_id, 'name' : channel_name , 'membername' : memberid, 
             'date' : decisiondate,'decisionname-a': a,'decision-a': user_text1[0],'decisionname-b': b,'decision-b': user_text2[0],
             'decisionname-c': c,'decision-c': user_text3[0]}})

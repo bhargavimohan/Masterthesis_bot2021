@@ -21,10 +21,7 @@ from config import DefaultConfig
 
 CONFIG = DefaultConfig()
 
-#("Hello! Congratulations on choosing one of the best practices of clean"
-# "documentation. The following two are useful commands:"
-# " '@D3driver init' - To start accessing decision cards"
-# " '@D3driver del'  - To reset the V-model process for the current channel")
+
 
 
 # Create adapter.
@@ -86,6 +83,7 @@ async def messages(req: Request) -> Response:
 
         activity, auth_header, BOT.on_turn
     )
+
 
     if invoke_response:
         return json_response(
