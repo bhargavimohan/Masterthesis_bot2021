@@ -86,6 +86,7 @@ async def messages(req: Request) -> Response:
 
         activity, auth_header, BOT.on_turn
     )
+
     if invoke_response:
         return json_response(
             data=invoke_response.body, status=invoke_response.status

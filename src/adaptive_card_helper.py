@@ -238,21 +238,45 @@ def create_adaptive_card_preview(
                     "weight": "bolder",
                 },
                 {
-                    "text": "{}: {}".format(a, user_text1), 
+                    "text": "{}".format(a), 
                     "type": "TextBlock", 
-                    "id": "Question1"
+                    "id": "Question1",
+                    "color": "Accent",
+                    "size": "Large"
+                },
+                {
+                    "text": "{}".format(user_text1), 
+                    "type": "TextBlock", 
+                    "id": "Question1",
+                    "weight": "bolder"
                 },
 
 
                 {
-                    "text": "{}: {}".format(b, user_text2),
+                    "text": "{}".format(b),
                     "type": "TextBlock", 
-                    "id": "Question2"
+                    "id": "Question2",
+                    "color": "Accent",
+                    "size": "Large"
+                },
+                {
+                    "text": "{}".format(user_text2), 
+                    "type": "TextBlock", 
+                    "id": "Question1",
+                    "weight": "bolder"
                 },
                 { 
-                    "text": "{}: {}".format(c, user_text3), 
+                    "text": "{}".format(c), 
                     "type": "TextBlock", 
-                    "id": "Question3"
+                    "id": "Question3",
+                    "color": "Accent",
+                    "size": "Large"
+                },
+                {
+                    "text": "{}".format(user_text3), 
+                    "type": "TextBlock", 
+                    "id": "Question1",
+                    "weight": "bolder"
                 },
 
             ],
@@ -260,4 +284,5 @@ def create_adaptive_card_preview(
             "version": "1.0",
         }
     )
+    
 

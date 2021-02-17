@@ -28,30 +28,32 @@ from tinydb import TinyDB, Query, where
 from tinydb.operations import delete
 db = TinyDB('database.json')
 table = db.table('Initializedchannelsanddata')
+table1 = db.table('Designdecisions')
 ch = Query()
 
 
 
 class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
     async def on_message_activity(self, turn_context: TurnContext):
-        text_command = turn_context._activity.text        
+        text_command = turn_context.activity.text        
         D3driverinitcommand = '<at>D3driver</at> init\n'
         D3driverdelcommand = '<at>D3driver</at> del\n'         
         value = turn_context.activity.value
-        channel_name = turn_context._activity.conversation.name
+        channel_name = turn_context.activity.conversation.name
         if channel_name is None:
             channel_name = 'General'
-
+        channel_id = turn_context.activity.channel_data['channel']['id']
+        conversation_id = turn_context.activity.conversation.id #to distinguish 'Generals' of different teams
         if value is not None:
             vmodelname = value["Choices"] if "Choices" in value else ""
-            member = turn_context._activity.from_property.name
-            year = str(turn_context._activity.local_timestamp.year)
-            month = str(turn_context._activity.local_timestamp.month)
-            day = str(turn_context._activity.local_timestamp.day)
+            member = turn_context.activity.from_property.name
+            year = str(turn_context.activity.local_timestamp.year)
+            month = str(turn_context.activity.local_timestamp.month)
+            day = str(turn_context.activity.local_timestamp.day)
             cardsentdate = year + "-" + month + "-" + day
-            result = table.search(ch['channel']['name'] == channel_name)
+            result = table.search(ch['channel']['channelid'] == channel_id)
             if(len(result) == 0):
-                table.insert({'channel': {'name' : channel_name ,'vmodel' : vmodelname, 'membername' : member, 'date' : cardsentdate}})
+                table.insert({'channel': {'channelid': channel_id, 'name' : channel_name ,'vmodel' : vmodelname, 'membername' : member, 'date' : cardsentdate}})
                 reply = MessageFactory.text(
                     f"{turn_context.activity.from_property.name} chose '{vmodelname}' V-model process for this channel."
                 )
@@ -66,20 +68,32 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
 
         elif text_command == D3driverinitcommand:
                     #vmodelname = 'Model-based'
-            
-            card = create_vmodel_card_editor()
-            task_info = TaskModuleTaskInfo(
-            card=card, height=450, title="Design decision card", width=500
+            result = table.search(ch['channel']['channelid'] == channel_id)
+            if(len(result) == 0):
+                card = create_vmodel_card_editor()
+                task_info = TaskModuleTaskInfo(
+                card=card, height=450, title="Design decision card", width=500
+                    )
+                message = MessageFactory.attachment(card)
+                response_id = await turn_context.send_activity(message)
+            else:
+                reply = MessageFactory.text(
+                    "V-Model process - '{}' has been selected for Channel '{}', please use command '@D3driver del' and reset if required.".format(
+                        result[0]["channel"]["vmodel"],
+                        channel_name)
                 )
-            message = MessageFactory.attachment(card)
-            await turn_context.send_activity(message)
-            
+                await turn_context.send_activity(reply)
+            # new_activity = MessageFactory.text("This card has been disable")
+            # new_activity.id = response_id.id
+            # update_result = await turn_context.update_activity(new_activity)
+
                         
 
         elif text_command == D3driverdelcommand:
-            table.remove(where('channel').name == channel_name)
+            table.remove(where('channel').channelid == channel_id)
+            table1.remove(where('decisions').channelid == channel_id)
             reply = MessageFactory.text(
-            "This channel is no more initialized. To re-initialize the channel, please enter "
+            "This channel is no more initialized. All the design decsions(if discussed) has been deleted from the database. To re-initialize the channel, please enter "
             "@D3driver init"
             )
             await turn_context.send_activity(reply)
@@ -94,13 +108,14 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
     async def on_teams_messaging_extension_fetch_task(
         self, turn_context: TurnContext, action: MessagingExtensionAction
     ) -> MessagingExtensionActionResponse:
-
+        channel_id = turn_context.activity.channel_data['channel']['id']
+        conversation_id = turn_context.activity.conversation.id #to distinguish 'Generals' of different teams
         # TODO: If channel in initialzed table, then continue with normal card, else show error card
-        channel_name = turn_context._activity.conversation.name
+        channel_name = turn_context.activity.conversation.name
         if channel_name is None:
             channel_name = 'General'
         #vmodelname = value["Choices"]
-        result = table.search(ch['channel']['name'] == channel_name)
+        result = table.search(ch['channel']['channelid'] == channel_id)
         if(len(result) == 1):
             if(result[0]["channel"]["vmodel"] == 'Model-based'):
                 card = create_modelbased_adaptive_card_editor()
@@ -133,11 +148,23 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
     async def on_teams_messaging_extension_submit_action(  # pylint: disable=unused-argument
         self, turn_context: TurnContext, action: MessagingExtensionAction
     ) -> MessagingExtensionActionResponse:
-    
+
+        text_command = turn_context.activity.text        
+        D3driverdelcommand = '<at>D3driver</at> del\n'  
+
+
+
+
+        channel_id = turn_context.activity.channel_data['channel']['id']
+        year = str(turn_context.activity.local_timestamp.year)
+        month = str(turn_context.activity.local_timestamp.month)
+        day = str(turn_context.activity.local_timestamp.day)
+        decisiondate = year + "-" + month + "-" + day
         channel_name = turn_context._activity.conversation.name
         if channel_name is None:
             channel_name = 'General'
-        result = table.search(ch['channel']['name'] == channel_name)
+        # result = table.search(ch['channel']['name'] == channel_name)
+        result = table.search(ch['channel']['channelid'] == channel_id)
         if(result[0]["channel"]["vmodel"] == 'Model-based'):
             a="Functional design decision"
             b="Logical design decision"
@@ -156,10 +183,21 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
         user_text2 = action.data["Question2"],
         user_text3 = action.data["Question3"],
 
-        # db entries
+        
+
+        
         # activity_preview = action.bot_activity_preview[0]
         # content = activity_preview.attachments[0].content
         # data = self._get_example_data(content)
+        if(user_text1[0] == ''):
+            a = ''
+        if(user_text2[0] == ''):
+            b = ''
+        if(user_text3[0] == ''):
+            c = ''
+        
+
+
 
    
         memberid = turn_context._activity.from_property.name
@@ -172,11 +210,33 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
              c,
              memberid,
         )
-          
-        message = MessageFactory.attachment(card)
-        await turn_context.send_activity(message)
 
-        return MessagingExtensionActionResponse()
+        # db entries
+        if(result[0]["channel"]["vmodel"] == 'Model-based'):
+            table1.insert({'decisions': {'channelid': channel_id, 'name' : channel_name , 'membername' : memberid, 
+            'date' : decisiondate,'decisionname-a': a,'decision-a': user_text1[0],'decisionname-b': b,'decision-b': user_text2[0],
+            'decisionname-c': c,'decision-c': user_text3[0]}})
+        elif(result[0]["channel"]["vmodel"] == 'INCOSE'):
+            table1.insert({'decisions': {'channelid': channel_id, 'name' : channel_name , 'membername' : memberid, 
+            'date' : decisiondate,'decisionname-a': a,'decision-a': user_text1[0],'decisionname-b': b,'decision-b': user_text2[0],
+            'decisionname-c': c,'decision-c': user_text3[0]}})
+        elif(result[0]["channel"]["vmodel"] == 'Domain-specific'):
+            table1.insert({'decisions': {'channelid': channel_id, 'name' : channel_name , 'membername' : memberid, 
+            'date' : decisiondate,'decisionname-a': a,'decision-a': user_text1[0],'decisionname-b': b,'decision-b': user_text2[0],
+            'decisionname-c': c,'decision-c': user_text3[0]}})
+        
+
+        if (user_text1[0] or user_text2[0] or user_text3[0] != ''):
+            message = MessageFactory.attachment(card)
+            await turn_context.send_activity(message)
+    
+            return MessagingExtensionActionResponse()
+        else:  
+            reply = MessageFactory.text(
+            "Error. No decision made"
+            )
+            await turn_context.send_activity(reply) 
+            
         
 
     # async def on_teams_messaging_extension_bot_message_preview_edit(  # pylint: disable=unused-argument
