@@ -6,8 +6,11 @@ import sys
 import traceback
 from datetime import datetime
 from http import HTTPStatus
+import jinja2
+import aiohttp_jinja2
 
 from aiohttp import web
+import json
 from aiohttp.web import Request, Response, json_response
 from botbuilder.core import (
     BotFrameworkAdapterSettings,
@@ -16,12 +19,14 @@ from botbuilder.core import (
 )
 from botbuilder.core.integration import aiohttp_error_middleware
 from botbuilder.schema import Activity, ActivityTypes
-from bots import TeamsMessagingExtensionsActionPreviewBot
+from bots import TeamsMessagingExtensionsActionPreviewBot, database
 from config import DefaultConfig
 
+import logging
+import os
+logging.basicConfig(level=logging.DEBUG)
+
 CONFIG = DefaultConfig()
-
-
 
 
 # Create adapter.
@@ -84,7 +89,6 @@ async def messages(req: Request) -> Response:
         activity, auth_header, BOT.on_turn
     )
 
-
     if invoke_response:
         return json_response(
             data=invoke_response.body, status=invoke_response.status
@@ -93,8 +97,31 @@ async def messages(req: Request) -> Response:
     return Response(status=HTTPStatus.OK)
 
 
-APP = web.Application(middlewares=[aiohttp_error_middleware])
+@aiohttp_jinja2.template("index.html")
+async def dashboard(request):
+    # return web.Response(
+    #     text='<h1>Hello!</h1>',
+    #     content_type='text/html')   
+    try:
+        response_obj_tables = database.get_channel_details('2')
+        response_obj_decisions = database.get_all_decisions('2')
+        ## return a success json response with status code 200 i.e. 'OK'
+        return {"decisions_list": response_obj_decisions,"tables_list":response_obj_tables}
+    except Exception as e:
+        ## Bad path where name is not set
+        return e
+
+
+APP = web.Application()
+# APP = web.Application(middlewares=[aiohttp_error_middleware])
+
+aiohttp_jinja2.setup(
+    APP, loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
+)
+
 APP.router.add_post("/api/messages", messages)
+APP.router.add_get("/dashboard", dashboard)
+
 
 if __name__ == "__main__":
     try:

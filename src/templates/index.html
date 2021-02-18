@@ -1,0 +1,20 @@
+<h1>Decisions</h1>
+<p>
+  <ul>
+    <li>
+      <h3> Channel Name </h3> - {{ tables_list.name }}
+      <h3>Selected phase in the V-model</h3> - {{ tables_list.vphase }}
+      <h3>Member who chose</h3> - {{ tables_list.membername }}
+      <h3>Date of choice</h3> - {{ tables_list.date }}
+    </li>
+
+  </ul>
+  <ul>
+    {% for decision in decisions_list %}
+    <li>
+
+      {{ decision.name }} -  {{ decision.membername }}
+    </li>
+    {% endfor %}
+  </ul>
+</p>

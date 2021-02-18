@@ -4,6 +4,7 @@
 
 import os
 
+os.environ["D3_DATABASE_PATH"] = '/home/bhargavi/Documents/Masterthesis_bot2021/src/database.json'
 
 class DefaultConfig:
     """ Bot Configuration """

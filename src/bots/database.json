@@ -1,0 +1,43 @@
+{
+    "Initializedchannelsanddata": {
+        "1": {
+            "channel": {
+                "channelid": "2",
+                "name": "testing",
+                "vphase": "Implementation",
+                "membername": "Bhargavi Mohan",
+                "date": "2021-2-18"
+            }
+        }
+    },
+    "Designdecisions": {
+        "1": {
+            "decisions": {
+                "channelid": "19:ffc24d061e3f4e01bf80ef327e4a596e@thread.tacv2",
+                "name": "testing",
+                "membername": "Bhargavi Mohan",
+                "date": "2021-2-18",
+                "decisionname-a": "Mechanical design decisions",
+                "decision-a": "mdd",
+                "decisionname-b": "Electrical design decisions",
+                "decision-b": "edd",
+                "decisionname-c": "Software design decisions",
+                "decision-c": "sdd"
+            }
+        },
+        "2": {
+            "decisions": {
+                "channelid": "2",
+                "name": "testing",
+                "membername": "Bhargavi Mohan",
+                "date": "2021-2-18",
+                "decisionname-a": "Mechanical design decisions",
+                "decision-a": "mdd",
+                "decisionname-b": "Electrical design decisions",
+                "decision-b": "edd",
+                "decisionname-c": "Software design decisions",
+                "decision-c": "sdd"
+            }
+        }        
+    }
+}

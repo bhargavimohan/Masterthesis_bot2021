@@ -26,12 +26,8 @@ from adaptive_card_helper import (
 
 from tinydb import TinyDB, Query, where
 from tinydb.operations import delete
-db = TinyDB('database.json')
-table = db.table('Initializedchannelsanddata')
-table1 = db.table('Designdecisions')
-ch = Query()
 
-
+from bots import database
 
 class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
     async def on_message_activity(self, turn_context: TurnContext):
@@ -55,6 +51,7 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                 cardsentdate = year + "-" + month + "-" + day
                 result = table.search(ch['channel']['channelid'] == channel_id)
                 if(len(result) == 0):
+                    # database.insert_channel()
                     table.insert({'channel': {'channelid': channel_id, 'name' : channel_name ,'vphase' : vphase, 'membername' : member, 'date' : cardsentdate}})
                     reply = MessageFactory.text(
                         f"{turn_context.activity.from_property.name} chose '{vphase}' phase for this channel."
