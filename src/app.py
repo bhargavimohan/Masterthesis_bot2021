@@ -103,9 +103,11 @@ async def dashboard(request):
     #     text='<h1>Hello!</h1>',
     #     content_type='text/html')   
     try:
-        response_obj_tables = database.get_channel_details('2')
-        response_obj_decisions = database.get_all_decisions('2')
-        ## return a success json response with status code 200 i.e. 'OK'
+        param = request._rel_url.query_string
+        param = param.strip('channelid=')
+        response_obj_tables = database.get_channel_details(param)
+        response_obj_decisions = database.get_all_decisions(param)
+        ## rErroreturn a success json response with status code 200 i.e. 'OK'
         return {"decisions_list": response_obj_decisions,"tables_list":response_obj_tables}
     except Exception as e:
         ## Bad path where name is not set
@@ -113,7 +115,7 @@ async def dashboard(request):
 
 
 APP = web.Application()
-# APP = web.Application(middlewares=[aiohttp_error_middleware])
+#APP = web.Application(middlewares=[aiohttp_error_middleware])
 
 aiohttp_jinja2.setup(
     APP, loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))

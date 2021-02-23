@@ -1,20 +1,209 @@
-<h1>Decisions</h1>
-<p>
-  <ul>
+<style type="text/css">
+  h2 {
+    font-family:sans-serif;
+  }
+  .list {
+    font-family:sans-serif;
+    margin:0;
+    padding:20px 0 0;
+  }
+  .list > li {
+    display:block;
+    background-color: #eee;
+    padding:10px;
+    box-shadow: inset 0 1px 0 #fff;
+  }
+  .avatar {
+    max-width: 150px;
+  }
+  img {
+    max-width: 100%;
+  }
+  h3 {
+    font-size: 16px;
+    margin:0 0 0.3rem;
+    font-weight: normal;
+    font-weight:bold;
+  }
+  p {
+    margin:0;
+  }
+  
+  input {
+    border:solid 1px #ccc;
+    border-radius: 5px;
+    padding:7px 14px;
+    margin-bottom:10px
+  }
+  input:focus {
+    outline:none;
+    border-color:#aaa;
+  }
+  .sort {
+    padding:8px 30px;
+    border-radius: 6px;
+    border:none;
+    display:inline-block;
+    color:#fff;
+    text-decoration: none;
+    background-color: #28a8e0;
+    height:30px;
+  }
+  .sort:hover {
+    text-decoration: none;
+    background-color:#1b8aba;
+  }
+  .sort:focus {
+    outline:none;
+  }
+  .sort:after {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    content:"";
+    position: relative;
+    top:-10px;
+    right:-5px;
+  }
+  .sort.asc:after {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #fff;
+    content:"";
+    position: relative;
+    top:13px;
+    right:-5px;
+  }
+  .sort.desc:after {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #fff;
+    content:"";
+    position: relative;
+    top:-10px;
+    right:-5px;
+  }
+  </style>
+  
+  
+  
+  
+  <h2>D3driver tab</h2>
+  <p style="font-size: 1.5em;">Here you can find all your design decisions discussed in this channel.</strong></p>
+  <p>
+    <table style="border-collapse: collapse; width: 44.6552%; height: 210px;" border="1">
+      <tbody>
+      <tr>
+      <td style="width: 50%;">Channel Name</td>
+      <td style="width: 50%;">{{ tables_list.name }}</td>
+      </tr>
+      <tr>
+      <td style="width: 50%;">Selected phase in the V-model</td>
+      <td style="width: 50%;">{{ tables_list.vphase }}</td>
+      </tr>
+      <tr>
+      <td style="width: 50%;">Choice made by</td>
+      <td style="width: 50%;">{{ tables_list.membername }}</td>
+      </tr>
+      <tr>
+      <td style="width: 50%;">Choice made on</td>
+      <td style="width: 50%;">{{ tables_list.date }}</td>
+      </tr>
+      </tbody>
+      </table>
+  
+      &nbsp; 
+      &nbsp; 
+  
+  <div id="users">
+    <input class="search" placeholder="Search" />
+    <button class="sort" data-sort="Date">
+      Sort by date
+    </button>
+  
+    <ul class="list">
+      {% for decision in decisions_list %}
+      {% if decision.decision_a != '' %}  
     <li>
-      <h3> Channel Name </h3> - {{ tables_list.name }}
-      <h3>Selected phase in the V-model</h3> - {{ tables_list.vphase }}
-      <h3>Member who chose</h3> - {{ tables_list.membername }}
-      <h3>Date of choice</h3> - {{ tables_list.date }}
+    <h2 class="Decisionname">{{decision.decisionname_a}}</h2>  
+    <h3 class="Decision">{{decision.decision_a}}</h3> 
+    <p class="Member">{{decision.membername}}</p>
+    <p class="Date">{{decision.date}}</p>
     </li>
-
-  </ul>
-  <ul>
-    {% for decision in decisions_list %}
-    <li>
-
-      {{ decision.name }} -  {{ decision.membername }}
+    {% endif %}
+  
+    {% if decision.decision_b != '' %}
+  <li>
+    <h2 class="Decisionname">{{decision.decisionname_b}}</h2> 
+    <h3 class="Decision">{{decision.decision_b}}</h3> 
+    <p class="Member">{{decision.membername}}</p>
+    <p class="Date">{{decision.date}}</p>
+  </li>
+    {% endif %}
+  
+    {% if decision.decision_c != '' %}
+  <li>
+    <h2 class="Decisionname">{{decision.decisionname_c}}</h2> 
+    <h3 class="Decision">{{decision.decision_c}}</h3> 
+    <p class="Member">{{decision.membername}}</p>
+    <p class="Date">{{decision.date}}</p>
     </li>
-    {% endfor %}
-  </ul>
-</p>
+    {% endif %}
+    {% endfor %}  
+    </ul> 
+  
+  </div>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  
+  
+  <script>
+    microsoftTeams.initialize();
+   //  https://docs.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/access-teams-context
+    microsoftTeams.getContext((context) => {
+     microsoftTeams.settings.setSettings({
+         contentUrl: 'https://7b22dd51bc42.ngrok.io/dashboard?channelid=' + context.channelId ,
+       });
+       });
+   
+   
+   
+       microsoftTeams.settings.setValidityState(true); 
+       
+       // Handling the theme color detection and change
+         
+       microsoftTeams.getContext((context) => {
+         document.getElementById('user').textContent = context.loginHint;
+         
+         if(context.theme !== 'default') {
+           document.body.style.color = '#fff';
+         }
+   
+       });
+       
+       microsoftTeams.registerOnThemeChangeHandler((theme)=> { 
+         if(theme !== 'default') {
+           document.body.style.color = '#fff';
+         } else {
+           document.body.style.color = 'inherit';
+         }
+       });
+   
+   
+   </script>
+  
+  <script>
+  
+  var options = {
+    valueNames: [ 'Decisionname', 'Decision','Member', 'Date' ]
+  };
+  
+  var userList = new List('users', options);
+  </script>
+
+
