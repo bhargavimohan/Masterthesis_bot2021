@@ -1,0 +1,45 @@
+
+  
+  
+  
+  <h2>Welcome to D3driver tab</h2>
+
+
+  <script src="https://statics.teams.cdn.office.net/sdk/v1.9.0/js/MicrosoftTeams.min.js"></script>
+
+  <script>
+    microsoftTeams.initialize();
+   //  https://docs.microsoft.com/en-us/microsoftteams/platform/tabs/how-to/access-teams-context
+    microsoftTeams.getContext((context) => {
+     microsoftTeams.settings.setSettings({
+         contentUrl: 'https://7b22dd51bc42.ngrok.io/dashboard?channelid=' + context.channelId ,
+       });
+       });
+       microsoftTeams.settings.setValidityState(true); 
+       
+       // Handling the theme color detection and change
+         
+       microsoftTeams.getContext((context) => {
+         document.getElementById('user').textContent = context.loginHint;
+         
+         if(context.theme !== 'default') {
+           document.body.style.color = '#fff';
+         }
+   
+       });
+       
+       microsoftTeams.registerOnThemeChangeHandler((theme)=> { 
+         if(theme !== 'default') {
+           document.body.style.color = '#fff';
+         } else {
+           document.body.style.color = 'inherit';
+         }
+       });
+   
+   
+   </script>
+  
+
+
+
+

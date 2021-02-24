@@ -49,10 +49,10 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                 month = str(turn_context.activity.local_timestamp.month)
                 day = str(turn_context.activity.local_timestamp.day)
                 cardsentdate = year + "-" + month + "-" + day
-                result = database.table.search(database.ch['channel']['channelid'] == channel_id)
+                result = database.find_channel_exists(channel_id)
                 if(len(result) == 0):
                     # database.insert_channel()
-                    database.table.insert({'channel': {'channelid': channel_id, 'name' : channel_name ,'vphase' : vphase, 'membername' : member, 'date' : cardsentdate}})
+                    database.insert_channel(channel_id,channel_name,vphase,member,cardsentdate)
                     reply = MessageFactory.text(
                         f"{turn_context.activity.from_property.name} chose '{vphase}' phase for this channel."
                     )
@@ -67,7 +67,7 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
 
             elif text_command == D3driverinitcommand:
                         #vphase = 'Model-based'
-                result = database.table.search(database.ch['channel']['channelid'] == channel_id)
+                result = database.find_channel_exists(channel_id)
                 if(len(result) == 0):
                     card = create_vphase_card_editor()
                     task_info = TaskModuleTaskInfo(
@@ -89,8 +89,8 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
 
 
             elif text_command == D3driverdelcommand:
-                database.table.remove(where('channel').channelid == channel_id)
-                database.table1.remove(where('decisions').channelid == channel_id)
+                database.delete_channel(channel_id)
+                database.delete_decision(channel_id)
                 reply = MessageFactory.text(
                 "This channel is no more initialized. All the design decsions(if discussed) has been deleted from the database. To re-initialize the channel, please enter "
                 "@D3driver init"
@@ -126,7 +126,7 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
         if channel_name is None:
             channel_name = 'General'
         #vphase = value["Choices"]
-        result = database.table.search(database.ch['channel']['channelid'] == channel_id)
+        result = database.find_channel_exists(channel_id)
         if(len(result) == 1):
             if(result[0]["channel"]["vphase"] == 'Architecture Design'):
                 card = create_ad_adaptive_card_editor()
@@ -175,7 +175,7 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
         if channel_name is None:
             channel_name = 'General'
         # result = table.search(ch['channel']['name'] == channel_name)
-        result = database.table.search(database.ch['channel']['channelid'] == channel_id)
+        result = database.find_channel_exists(channel_id)
         if(result[0]["channel"]["vphase"] == 'Architecture Design'):
             a="Functional design decision"
             b="Logical design decision"
@@ -224,17 +224,11 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
 
         # db entries
         if(result[0]["channel"]["vphase"] == 'Architecture Design'):
-            database.table1.insert({'decisions': {'channelid': channel_id, 'name' : channel_name , 'membername' : memberid, 
-            'date' : decisiondate,'decisionname_a': a,'decision_a': user_text1[0],'decisionname_b': b,'decision_b': user_text2[0],
-            'decisionname_c': c,'decision_c': user_text3[0]}})
+            database.insert_decision(channel_id,channel_name,memberid,decisiondate,a,user_text1,b,user_text2,c,user_text3)
         elif(result[0]["channel"]["vphase"] == 'Design/concept'):
-            database.table1.insert({'decisions': {'channelid': channel_id, 'name' : channel_name , 'membername' : memberid, 
-            'date' : decisiondate,'decisionname_a': a,'decision_a': user_text1[0],'decisionname_b': b,'decision_b': user_text2[0],
-            'decisionname_c': c,'decision_c': user_text3[0]}})
+            database.insert_decision(channel_id,channel_name,memberid,decisiondate,a,user_text1,b,user_text2,c,user_text3)
         elif(result[0]["channel"]["vphase"] == 'Implementation'):
-            database.table1.insert({'decisions': {'channelid': channel_id, 'name' : channel_name , 'membername' : memberid, 
-            'date' : decisiondate,'decisionname_a': a,'decision_a': user_text1[0],'decisionname_b': b,'decision_b': user_text2[0],
-            'decisionname_c': c,'decision_c': user_text3[0]}})
+            database.insert_decision(channel_id,channel_name,memberid,decisiondate,a,user_text1,b,user_text2,c,user_text3)
         
 
         if (user_text1[0] or user_text2[0] or user_text3[0] != ''):

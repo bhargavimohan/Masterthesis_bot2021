@@ -97,7 +97,7 @@ async def messages(req: Request) -> Response:
     return Response(status=HTTPStatus.OK)
 
 
-@aiohttp_jinja2.template("index.html")
+@aiohttp_jinja2.template("dashboard.html")
 async def dashboard(request):
     # return web.Response(
     #     text='<h1>Hello!</h1>',
@@ -113,6 +113,17 @@ async def dashboard(request):
         ## Bad path where name is not set
         return e
 
+@aiohttp_jinja2.template("config.html")
+async def config(request):
+    # return web.Response(
+    #     text='<h1>Hello!</h1>',
+    #     content_type='text/html')   
+    try:
+        return {}
+    except Exception as e:
+        ## Bad path where name is not set
+        return e
+
 
 APP = web.Application()
 #APP = web.Application(middlewares=[aiohttp_error_middleware])
@@ -123,6 +134,7 @@ aiohttp_jinja2.setup(
 
 APP.router.add_post("/api/messages", messages)
 APP.router.add_get("/dashboard", dashboard)
+APP.router.add_get("/config", config)
 
 
 if __name__ == "__main__":

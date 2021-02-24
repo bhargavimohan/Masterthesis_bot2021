@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json",
   "manifestVersion": "1.8",
-  "version": "5.0.6",
+  "version": "5.0.8",
   "id": "5a0f653d-152c-4a78-ab1a-d199ad22312e",
   "packageName": "com.microsoft.teams.samples",
   "developer": {
@@ -25,7 +25,7 @@
   "accentColor": "#FFFFFF",
   "configurableTabs": [
     {
-      "configurationUrl": "https://7b22dd51bc42.ngrok.io/dashboard",
+      "configurationUrl": "https://7b22dd51bc42.ngrok.io/config",
       "canUpdateConfiguration": true,
       "scopes": [
         "team",
