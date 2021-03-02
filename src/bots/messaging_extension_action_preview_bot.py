@@ -19,7 +19,6 @@ from adaptive_card_helper import (
     create_dc_adaptive_card_editor,
     create_imp_adaptive_card_editor,
     create_adaptive_card_preview,
-    create_error_card_editor,
     create_vphase_card_editor,
 
 )
@@ -57,7 +56,7 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                         f"{turn_context.activity.from_property.name} chose '{vphase}' phase for this channel."
                     )
                     await turn_context.send_activity(reply)
-                else:
+                else:                             
                     reply = MessageFactory.text(
                         "The phase - '{}' in a V-model has been selected for Channel '{}', please use command '@D3driver del' and reset if required.".format(
                             result[0]["channel"]["vphase"],
@@ -76,6 +75,7 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                     message = MessageFactory.attachment(card)
                     response_id = await turn_context.send_activity(message)
                 else:
+                    
                     reply = MessageFactory.text(
                         "The phase - '{}' in a V-Model has been selected for Channel '{}', please use command '@D3driver del' and reset if required.".format(
                             result[0]["channel"]["vphase"],

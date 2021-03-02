@@ -89,32 +89,60 @@
     top:-10px;
     right:-5px;
   }
+  .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.styled-table thead tr {
+    background-color: #28a8e0;
+    color: #ffffff;
+    text-align: left;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #28a8e0;
+}
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #000000;
+}
+
   </style>
   
   
   <p style="font-size: 1.5em;">Here you can find all your design decisions discussed in this channel.</strong></p>
-  <p>
-    <table style="border-collapse: collapse; width: 44.6552%; height: 210px;" border="1">
-      <tbody>
-      <tr>
-      <td style="width: 50%;">Channel Name</td>
-      <td style="width: 50%;">{{ tables_list.name }}</td>
-      </tr>
-      <tr>
-      <td style="width: 50%;">Selected phase in the V-model</td>
-      <td style="width: 50%;">{{ tables_list.vphase }}</td>
-      </tr>
-      <tr>
-      <td style="width: 50%;">Choice made by</td>
-      <td style="width: 50%;">{{ tables_list.membername }}</td>
-      </tr>
-      <tr>
-      <td style="width: 50%;">Choice made on</td>
-      <td style="width: 50%;">{{ tables_list.date }}</td>
-      </tr>
-      </tbody>
-      </table>
-  
+
+      <table class="styled-table">
+        <thead>
+            <tr>
+                <th>V-model phase</th>
+                <th>Choice by</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="active-row">
+                <td>{{ tables_list.vphase }}</td>
+                <td>{{ tables_list.membername }}</td>
+
+            </tr>
+        </tbody>
+    </table>
+   
       &nbsp; 
       &nbsp; 
 
@@ -154,20 +182,26 @@
     </li>
     {% endif %}
     {% endfor %}  
-    </ul> 
+    </ul>   
+    
   </div>
-
+  
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
   
   <script>
   
   var options = {
     valueNames: [ 'Decisionname', 'Decision','Member', 'Date' ]
   };
-  
+
   var userList = new List('users', options);
+  
   </script>
+
+
+
 
 
 
