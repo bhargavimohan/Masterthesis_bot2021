@@ -71,7 +71,19 @@ def create_ad_adaptive_card_editor(
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                            "text": "* ***Functional design decisions:*** Decisions related to functions describe functionality of the system under consideration independant of the solution.",
+                            "isSubtle": True,
+                            "wrap": True
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "* ***Logical design decisions:*** Decisions related to logical architecture describes a possible implementation of the functions with defined solution principles.",
+                            "isSubtle": True,
+                            "wrap": True
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "* ***Physical design decisions:*** Decisions related to the physical element describes the actual implementation, e.g. technical elements with part numbers, concrete source code, etc.",
                             "isSubtle": True,
                             "wrap": True
                         }
@@ -178,7 +190,19 @@ def create_dc_adaptive_card_editor(
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                            "text": "* ***Design definition decisions:*** Decisions related to technology management,design objectives and design definition strategy, including the need for and requirements of any enabling systems, products, or services.",
+                            "isSubtle": True,
+                            "wrap": True
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "* ***Design characteristics & Enablers decisions:*** Decisions related to  design characteristics for the architectural entities that ensures that the design characteristics are feasible. Design enablers such as models (physical and analytical), design heuristics, etc. are decided.",
+                            "isSubtle": True,
+                            "wrap": True
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "* ***Design Alternatives decisions:*** Decisions related to assessing options for the system element to be developed using selection criteria. The most appropriate alternatives decision is made to develop the system element.",
                             "isSubtle": True,
                             "wrap": True
                         }
@@ -186,12 +210,11 @@ def create_dc_adaptive_card_editor(
                 }
             ]
         },
-                {"type": "TextBlock", "text": " Design definition decisions:"},
+                {"type": "TextBlock", "text": "Design definition decisions:"},
                 {
                     "id": "Question1",
                     "placeholder": "Input text here",
                     "type": "Input.Text",
-                    "isMultiline": True,
                     "value": user_text1,
                 },
                 {"type": "TextBlock", "text": "Design characteristics & Enablers decisions:"},
@@ -199,15 +222,13 @@ def create_dc_adaptive_card_editor(
                     "id": "Question2",
                     "placeholder": "Input text here",
                     "type": "Input.Text",
-                    "isMultiline": True,
                     "value": user_text2,
                 },
-                {"type": "TextBlock", "text": " Design Alternatives decisions:"},
+                {"type": "TextBlock", "text": "Design Alternatives decisions:"},
                 {
                     "id": "Question3",
                     "placeholder": "Input text here",
                     "type": "Input.Text",
-                    "isMultiline": True,
                     "value": user_text3,
                 },  
             ],
@@ -285,7 +306,19 @@ def create_imp_adaptive_card_editor(
                     "items": [
                         {
                             "type": "TextBlock",
-                            "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                            "text": "* ***Mechanical design decisions:*** Decisions related to mechanics like displacement, velocity, acceleration, force , torque etc.",
+                            "isSubtle": True,
+                            "wrap": True
+                        },
+                         {
+                            "type": "TextBlock",
+                            "text": "* ***Electrical design decisions:*** Decisions related to electronics like electric variables, voltage, current, electric field strength etc.",
+                            "isSubtle": True,
+                            "wrap": True
+                        },
+                         {
+                            "type": "TextBlock",
+                            "text": "* ***Software design decisions:*** Decisions related to digital information process like logical operations, algorithms, database etc.",
                             "isSubtle": True,
                             "wrap": True
                         }
@@ -298,7 +331,6 @@ def create_imp_adaptive_card_editor(
                     "id": "Question1",
                     "placeholder": "Input text here",
                     "type": "Input.Text",
-                    "isMultiline": True,
                     "value": user_text1,
                 },
                 {"type": "TextBlock", "text": "Electrical design decisions:"},
@@ -306,7 +338,6 @@ def create_imp_adaptive_card_editor(
                     "id": "Question2",
                     "placeholder": "Input text here",
                     "type": "Input.Text",
-                    "isMultiline": True,
                     "value": user_text2,
                 },
                 {"type": "TextBlock", "text": "Software design decisions:"},
@@ -314,7 +345,6 @@ def create_imp_adaptive_card_editor(
                     "id": "Question3",
                     "placeholder": "Input text here",
                     "type": "Input.Text",
-                    "isMultiline": True,
                     "value": user_text3,
                 },  
             ],

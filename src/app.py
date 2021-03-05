@@ -24,7 +24,8 @@ from config import DefaultConfig
 
 import logging
 import os
-#logging.basicConfig(level=logging.DEBUG)
+#
+logging.basicConfig(level=logging.DEBUG)
 
 CONFIG = DefaultConfig()
 

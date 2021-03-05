@@ -93,24 +93,20 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                 database.delete_decision(channel_id)
                 reply = MessageFactory.text(
                 "This channel is no more initialized. All the design decsions(if discussed) has been deleted from the database. To re-initialize the channel, please enter "
-                "@D3driver init"
+                "the init command"
                 )
                 await turn_context.send_activity(reply)
 
             else:
                 reply = MessageFactory.text(
                 "Hello from ***D3driver!*** Congratulations on choosing one of the best practices of clean "
-                "documentation. Please follow apropriate instructions: "
-                "***'@D3driver init' - To start accessing decision cards*** and "
-                "***'@D3driver del'  - To reset the phase in which you would like to document your design decisions***"
+                "documentation. Please use the two default commands in your channels as per your requirements. ***Happy Documenting!***"
                 )
                 await turn_context.send_activity(reply)
         else:
             reply = MessageFactory.text(
             "Hi there! Welcome to ***D3driver***. Congratulations on choosing one of the best practices of clean "
-            "documentation. Please follow apropriate instructions: "
-            "***'@D3driver init' - To start accessing decision cards*** and "
-            "***'@D3driver del'  - To reset the phase in which you would like to document your design decisions***"
+            "documentation. Please use the two default commands in your channels as per your requirements. ***Happy Documenting!***"
             )
             await turn_context.send_activity(reply)
             
@@ -119,40 +115,45 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
     async def on_teams_messaging_extension_fetch_task(
         self, turn_context: TurnContext, action: MessagingExtensionAction
     ) -> MessagingExtensionActionResponse:
-        channel_id = turn_context.activity.channel_data['channel']['id']
-        conversation_id = turn_context.activity.conversation.id #to distinguish 'Generals' of different teams
-        # TODO: If channel in initialzed table, then continue with normal card, else show error card
-        channel_name = turn_context.activity.conversation.name
-        if channel_name is None:
-            channel_name = 'General'
-        #vphase = value["Choices"]
-        result = database.find_channel_exists(channel_id)
-        if(len(result) == 1):
-            if(result[0]["channel"]["vphase"] == 'Architecture Design'):
-                card = create_ad_adaptive_card_editor()
-                task_info = TaskModuleTaskInfo(
-                    card=card, height=450, title="Design decision card", width=500
+        if turn_context.activity.conversation.conversation_type != 'personal':
+            channel_id = turn_context.activity.channel_data['channel']['id']
+            conversation_id = turn_context.activity.conversation.id #to distinguish 'Generals' of different teams
+            # TODO: If channel in initialzed table, then continue with normal card, else show error card
+            channel_name = turn_context.activity.conversation.name
+            if channel_name is None:
+                channel_name = 'General'
+            #vphase = value["Choices"]
+            result = database.find_channel_exists(channel_id)
+            if(len(result) == 1):
+                if(result[0]["channel"]["vphase"] == 'Architecture Design'):
+                    card = create_ad_adaptive_card_editor()
+                    task_info = TaskModuleTaskInfo(
+                        card=card, height=450, title="Design decision card", width=500
+                    )
+                    continue_response = TaskModuleContinueResponse(value=task_info)
+                    return MessagingExtensionActionResponse(task=continue_response)
+                elif(result[0]["channel"]["vphase"] == 'Design/concept'):
+                    card = create_dc_adaptive_card_editor()
+                    task_info = TaskModuleTaskInfo(
+                        card=card, height=450, title="Design decision card", width=500
+                    )
+                    continue_response = TaskModuleContinueResponse(value=task_info)
+                    return MessagingExtensionActionResponse(task=continue_response)
+                elif(result[0]["channel"]["vphase"] == 'Implementation'):
+                    card = create_imp_adaptive_card_editor()
+                    task_info = TaskModuleTaskInfo(
+                        card=card, height=450, title="Design decision card", width=500
+                    )
+                    continue_response = TaskModuleContinueResponse(value=task_info)
+                    return MessagingExtensionActionResponse(task=continue_response)
+            else: 
+                reply = MessageFactory.text(
+                "Hi there! Please initialize your channel before accessing the cards by using the init command." 
                 )
-                continue_response = TaskModuleContinueResponse(value=task_info)
-                return MessagingExtensionActionResponse(task=continue_response)
-            elif(result[0]["channel"]["vphase"] == 'Design/concept'):
-                card = create_dc_adaptive_card_editor()
-                task_info = TaskModuleTaskInfo(
-                    card=card, height=450, title="Design decision card", width=500
-                )
-                continue_response = TaskModuleContinueResponse(value=task_info)
-                return MessagingExtensionActionResponse(task=continue_response)
-            elif(result[0]["channel"]["vphase"] == 'Implementation'):
-                card = create_imp_adaptive_card_editor()
-                task_info = TaskModuleTaskInfo(
-                    card=card, height=450, title="Design decision card", width=500
-                )
-                continue_response = TaskModuleContinueResponse(value=task_info)
-                return MessagingExtensionActionResponse(task=continue_response)
-        else: 
+                await turn_context.send_activity(reply)
+        else:
             reply = MessageFactory.text(
-            "Hi there! Please initialize your channel before accessing the cards. The command to intialize your current channel is " 
-            "@D3driver init"
+            "***D3driver*** is pleased to help you with decision cards in your required channels. Please access the bot using the default commands in any channel. ***Happy Documenting!***"
             )
             await turn_context.send_activity(reply)
 
@@ -160,8 +161,8 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
         self, turn_context: TurnContext, action: MessagingExtensionAction
     ) -> MessagingExtensionActionResponse:
 
-        text_command = turn_context.activity.text        
-        D3driverdelcommand = '<at>D3driver</at> del \n'  
+        # text_command = turn_context.activity.text        
+        # D3driverdelcommand = '<at>D3driver</at> del \n'  
 
 
 
@@ -174,7 +175,6 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
         channel_name = turn_context._activity.conversation.name
         if channel_name is None:
             channel_name = 'General'
-        # result = table.search(ch['channel']['name'] == channel_name)
         result = database.find_channel_exists(channel_id)
         if(result[0]["channel"]["vphase"] == 'Architecture Design'):
             a="Functional design decision"
@@ -194,22 +194,12 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
         user_text2 = action.data["Question2"],
         user_text3 = action.data["Question3"],
 
-        
-
-        
-        # activity_preview = action.bot_activity_preview[0]
-        # content = activity_preview.attachments[0].content
-        # data = self._get_example_data(content)
         if(user_text1[0] == ''):
             a = ''
         if(user_text2[0] == ''):
             b = ''
         if(user_text3[0] == ''):
             c = ''
-        
-
-
-
    
         memberid = turn_context._activity.from_property.name
         card = create_adaptive_card_preview(
@@ -243,42 +233,6 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
             await turn_context.send_activity(reply) 
             
         
-
-    # async def on_teams_messaging_extension_bot_message_preview_edit(  # pylint: disable=unused-argument
-    #     self, turn_context: TurnContext, action: MessagingExtensionAction
-    # ) -> MessagingExtensionActionResponse:
-    #     activity_preview = action.bot_activity_preview[0]
-    #     content = activity_preview.attachments[0].content
-    #     data = self._get_example_data(content)
-    #     card = create_adaptive_card_editor(
-    #         data.question,
-    #         data.is_multi_select,
-    #         data.option1,
-    #         data.option2,
-    #         data.option3,
-    #     )
-    #     task_info = TaskModuleTaskInfo(
-    #         card=card, height=450, title="Task Module Fetch Example", width=500
-    #     )
-    #     continue_response = TaskModuleContinueResponse(value=task_info)
-    #     return MessagingExtensionActionResponse(task=continue_response)
-
-    # async def on_teams_messaging_extension_bot_message_preview_send(  # pylint: disable=unused-argument
-    #     self, turn_context: TurnContext, action: MessagingExtensionAction
-    # ) -> MessagingExtensionActionResponse:
-    #     activity_preview = action.bot_activity_preview[0]
-    #     content = activity_preview.attachments[0].content
-    #     data = self._get_example_data(content)
-    #     card = create_adaptive_card_preview(
-    #         data.question,
-    #         data.is_multi_select,
-    #         data.option1,
-    #         data.option2,
-    #         data.option3,
-    #     )
-    #     message = MessageFactory.attachment(card)
-    #     await turn_context.send_activity(message)
-
     def _get_example_data(self, content: dict) -> ExampleData:
         body = content["body"]
         question1 = body[1]["text"]
