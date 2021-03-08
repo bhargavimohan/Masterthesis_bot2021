@@ -1,11 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.8/MicrosoftTeams.schema.json",
   "manifestVersion": "1.8",
-  "version": "1.0.0.0.0.0.0",
+  "version": "1.0",
   "id": "5a0f653d-152c-4a78-ab1a-d199ad22312e",
   "packageName": "com.microsoft.teams.samples",
   "developer": {
-    "name": "Microsoft",
+    "name": "UPB - Bhargavi Mohan",
     "websiteUrl": "https://dev.botframework.com",
     "privacyUrl": "https://privacy.microsoft.com",
     "termsOfUseUrl": "https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx"
@@ -20,7 +20,7 @@
   },
   "description": {
     "short": "Bot that aids documenting design decisions",
-    "full": "D3driver makes documentation easier by installing a messaging extension and a tab"
+    "full": "D3driver drives the design decision documentation in the easiest way possible. This bot is exclusively designed to be used in a Mechatronics team. The design phase is an integral step in systems engineering domain. In an inter-disciplinary team, the design stage during the lifecycle of a product is extended across different phases of V-model and hence the design decisions are made throughout architectural design phase , conceptual design phase and even during the implementation phase. All these design decisions and decision makers should be distinguished from regualar or unimportant discussions that happen within a team and put together for later quick access and that is exactly what D3driver assists the users with. D3driver installs a messaging extension and a tab. The messaging extension is to access decision cards where user can choose from which phase of the V-model does the user want to document the design decisions. The tab serves like a dashboard that displays all the design decisions discusssed in a team."
   },
   "accentColor": "#FFFFFF",
   "configurableTabs": [
@@ -28,8 +28,7 @@
       "configurationUrl": "https://b688da3c2fef.ngrok.io/config",
       "canUpdateConfiguration": true,
       "scopes": [
-        "team",
-        "groupchat"
+        "team"
       ],
       "context": [
         "channelTab"
@@ -41,25 +40,9 @@
       "botId": "5a0f653d-152c-4a78-ab1a-d199ad22312e",
       "scopes": [
         "personal",
-        "team",
-        "groupchat"
+        "team"
       ],
       "commandLists": [
-        {
-          "scopes": [
-            "personal"
-          ],
-          "commands": [
-            {
-              "title": "del",
-              "description": "del"
-            },
-            {
-              "title": "init",
-              "description": "init"
-            }
-          ]
-        },
         {
           "scopes": [
             "team"
