@@ -92,7 +92,7 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                 database.delete_channel(channel_id)
                 database.delete_decision(channel_id)
                 reply = MessageFactory.text(
-                "This channel is no more initialized. All the design decsions(if discussed) has been deleted from the database. To re-initialize the channel, please enter "
+                "This channel is no more initialized. All the design decsions(if discussed) has been deleted from the database. Plase click on ***'Export to PDF'*** button in D3driver tab to save all the data to your local device. To re-initialize the channel, please enter "
                 "the init command"
                 )
                 await turn_context.send_activity(reply)
@@ -161,12 +161,6 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
         self, turn_context: TurnContext, action: MessagingExtensionAction
     ) -> MessagingExtensionActionResponse:
 
-        # text_command = turn_context.activity.text        
-        # D3driverdelcommand = '<at>D3driver</at> del \n'  
-
-
-
-
         channel_id = turn_context.activity.channel_data['channel']['id']
         year = str(turn_context.activity.local_timestamp.year)
         month = str(turn_context.activity.local_timestamp.month)
@@ -182,7 +176,7 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
             c="Physical design decision"
         elif(result[0]["channel"]["vphase"] == 'Design/concept'):
             a="Design definition desisions"
-            b="Design characteristics and enablers desicions"
+            b="Design characteristics and enablers decisions"
             c="Design alterantives decisions"
         elif(result[0]["channel"]["vphase"] == 'Implementation'):
             a="Mechanical design decisions"

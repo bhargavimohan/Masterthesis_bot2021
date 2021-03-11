@@ -230,7 +230,7 @@
             console.log(window);
             var opt = {
                 margin: 1,
-                filename: "{{ tables_list.vphase | safe}}_{{ tables_list.name | safe}}",
+                filename: "{{ tables_list.name | safe}}_{{ tables_list.vphase | safe}}",
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
