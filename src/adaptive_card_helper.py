@@ -393,7 +393,7 @@ def create_vphase_card_editor(
                                 "value": "Implementation"
                             }   
                         ],
-			"id": "Choices",
+			            "id": "Choices",
                     	"isMultiSelect": is_multi_select,
                     	"style": "expanded",
                     	"type": "Input.ChoiceSet",

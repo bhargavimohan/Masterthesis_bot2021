@@ -43,26 +43,32 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
             conversation_id = turn_context.activity.conversation.id #to distinguish 'Generals' of different teams
             if value is not None:
                 vphase = value["Choices"] if "Choices" in value else ""
-                member = turn_context.activity.from_property.name
-                year = str(turn_context.activity.local_timestamp.year)
-                month = str(turn_context.activity.local_timestamp.month)
-                day = str(turn_context.activity.local_timestamp.day)
-                cardsentdate = year + "-" + month + "-" + day
-                result = database.find_channel_exists(channel_id)
-                if(len(result) == 0):
-                    # database.insert_channel()
-                    database.insert_channel(channel_id,channel_name,vphase,member,cardsentdate)
+                if vphase == '':
                     reply = MessageFactory.text(
-                        f"{turn_context.activity.from_property.name} chose '{vphase}' phase for this channel."
+                        "Please select one of the options"
                     )
                     await turn_context.send_activity(reply)
-                else:                             
-                    reply = MessageFactory.text(
-                        "The phase - '{}' in a V-model has been selected for Channel '{}', please use command '@D3driver del' and reset if required.".format(
-                            result[0]["channel"]["vphase"],
-                            channel_name)
-                    )
-                    await turn_context.send_activity(reply)
+                else:
+                    member = turn_context.activity.from_property.name
+                    year = str(turn_context.activity.local_timestamp.year)
+                    month = str(turn_context.activity.local_timestamp.month)
+                    day = str(turn_context.activity.local_timestamp.day)
+                    cardsentdate = year + "-" + month + "-" + day
+                    result = database.find_channel_exists(channel_id)
+                    if(len(result) == 0):
+                        # database.insert_channel()
+                        database.insert_channel(channel_id,channel_name,vphase,member,cardsentdate)
+                        reply = MessageFactory.text(
+                            f"{turn_context.activity.from_property.name} chose '{vphase}' phase for this channel."
+                        )
+                        await turn_context.send_activity(reply)
+                    else:                             
+                        reply = MessageFactory.text(
+                            "The phase - '{}' in a V-model has been selected for Channel '{}', please use del command and reset if required. Please note that by using the del command, all the data will be deleted from the database. Plase click on ***'Export to PDF'*** button in D3driver tab to save all the data to your local device before it is deleted.".format(
+                                result[0]["channel"]["vphase"],
+                                channel_name)
+                        )
+                        await turn_context.send_activity(reply)
 
             elif text_command == D3driverinitcommand:
                         #vphase = 'Model-based'
@@ -77,7 +83,7 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                 else:
                     
                     reply = MessageFactory.text(
-                        "The phase - '{}' in a V-Model has been selected for Channel '{}', please use command '@D3driver del' and reset if required.".format(
+                        "The phase - '{}' in a V-Model has been selected for Channel '{}', please use del command and reset if required. Please note that by using the del command, all the data will be deleted from the database. Plase click on ***'Export to PDF'*** button in D3driver tab to save all the data to your local device before it is deleted.".format(
                             result[0]["channel"]["vphase"],
                             channel_name)
                     )
@@ -92,7 +98,7 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                 database.delete_channel(channel_id)
                 database.delete_decision(channel_id)
                 reply = MessageFactory.text(
-                "This channel is no more initialized. All the design decsions(if discussed) has been deleted from the database. Plase click on ***'Export to PDF'*** button in D3driver tab to save all the data to your local device. To re-initialize the channel, please enter "
+                "This channel is no more initialized. All the design decsions(if discussed) has been deleted from the database. To re-initialize the channel, please enter "
                 "the init command"
                 )
                 await turn_context.send_activity(reply)
