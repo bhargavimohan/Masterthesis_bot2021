@@ -25,7 +25,7 @@
   "accentColor": "#FFFFFF",
   "configurableTabs": [
     {
-      "configurationUrl": "https://0d5ed1ced3ca.ngrok.io/config",
+      "configurationUrl": "https://d3driver.azurewebsites.net/config",
       "canUpdateConfiguration": true,
       "scopes": [
         "team"
