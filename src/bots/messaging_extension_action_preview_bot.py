@@ -64,7 +64,7 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                         await turn_context.send_activity(reply)
                     else:                             
                         reply = MessageFactory.text(
-                            "The phase - '{}' in a V-model has been selected for Channel '{}', please use del command and reset if required. Please note that by using the del command, all the data will be deleted from the database. Plase click on ***'Export to PDF'*** button in D3driver tab to save all the data to your local device before it is deleted.".format(
+                            "The phase - '{}' in a V-model has been selected for Channel '{}', please use ***del*** command and reset if required. Please note that by using the ***del*** command, all the data will be deleted from the database. Plase click on ***'Export to PDF'*** button in D3driver tab to save all the data to your local device before it is deleted.".format(
                                 result[0]["channel"]["vphase"],
                                 channel_name)
                         )

@@ -126,19 +126,22 @@ async def config(request):
         return e
 
 
-APP = web.Application()
-#APP = web.Application(middlewares=[aiohttp_error_middleware])
+def init_func(argv):
+    #APP = web.Application()
+    APP = web.Application(middlewares=[aiohttp_error_middleware])
 
-aiohttp_jinja2.setup(
-    APP, loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
-)
+    aiohttp_jinja2.setup(
+        APP, loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates'))
+    )
 
-APP.router.add_post("/api/messages", messages)
-APP.router.add_get("/dashboard", dashboard)
-APP.router.add_get("/config", config)
+    APP.router.add_post("/api/messages", messages)
+    APP.router.add_get("/dashboard", dashboard)
+    APP.router.add_get("/config", config)
+    return APP
 
 
 if __name__ == "__main__":
+    APP = init_func(None)
     try:
         web.run_app(APP, host="localhost", port=CONFIG.PORT)
     except Exception as error:
