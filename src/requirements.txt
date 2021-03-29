@@ -1,1 +1,4 @@
 botbuilder-integration-aiohttp>=4.11.0
+Jinja2
+aiohttp-jinja2
+tinydb
