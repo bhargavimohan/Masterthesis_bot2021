@@ -29,6 +29,13 @@ logging.basicConfig(level=logging.DEBUG)
 
 CONFIG = DefaultConfig()
 
+DATA_PATH = "/database/database.json"
+
+if os.path.exists(DATA_PATH) == False:
+    os.mkdir(DATA_PATH)
+
+database = os.path.join(DATA_PATH,"database")
+
 
 # Create adapter.
 # See https://aka.ms/about-bot-adapter to learn more about how bots work.

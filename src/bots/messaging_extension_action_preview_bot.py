@@ -181,7 +181,7 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
             b="Logical design decision"
             c="Physical design decision"
         elif(result[0]["channel"]["vphase"] == 'Design/concept'):
-            a="Design definition desisions"
+            a="Design definition decisions"
             b="Design characteristics and enablers decisions"
             c="Design alterantives decisions"
         elif(result[0]["channel"]["vphase"] == 'Implementation'):
