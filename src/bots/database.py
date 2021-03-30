@@ -3,9 +3,20 @@ from tinydb import TinyDB, Query, where
 from tinydb.operations import delete
 import os
 
-db_folder = os.path.join(os.path.dirname(__file__))
-db_file = os.path.join(db_folder, 'database.json')
-db = TinyDB(db_file)
+DOCKER = os.environ.get("FROM_DOCKER")
+
+if DOCKER == "yes":
+    DATA_PATH_FOLDER = "/app/database"
+else:
+    DATA_PATH_FOLDER = os.path.join(os.path.dirname(__file__), "../database")
+
+DATA_PATH = os.path.join(DATA_PATH_FOLDER, "database.json")
+
+if os.path.exists(DATA_PATH_FOLDER) == False:
+    os.mkdir(DATA_PATH_FOLDER)
+
+# db_folder = os.path.join(os.path.dirname(__file__))
+db = TinyDB(DATA_PATH)
 
 channelstable = db.table('Initializedchannelsanddata')
 decisionstable = db.table('Designdecisions')

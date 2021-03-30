@@ -29,13 +29,6 @@ logging.basicConfig(level=logging.DEBUG)
 
 CONFIG = DefaultConfig()
 
-DATA_PATH = "/database/database.json"
-
-if os.path.exists(DATA_PATH) == False:
-    os.mkdir(DATA_PATH)
-
-database = os.path.join(DATA_PATH,"database")
-
 
 # Create adapter.
 # See https://aka.ms/about-bot-adapter to learn more about how bots work.
@@ -121,6 +114,24 @@ async def dashboard(request):
         ## Bad path where name is not set
         return e
 
+
+async def jsonreply(request):
+    # return web.Response(
+    #     text='<h1>Hello!</h1>',
+    #     content_type='text/html')   
+    try:
+        param = request._rel_url.query_string
+        param = param.strip('channelid=')
+        response_obj_tables = database.get_channel_details(param)
+        response_obj_decisions = database.get_all_decisions(param)
+        ## rErroreturn a success json response with status code 200 i.e. 'OK'
+        return web.json_response({"decisions_list": response_obj_decisions,"tables_list":response_obj_tables})
+
+
+    except Exception as e:
+        ## Bad path where name is not set
+        return web.json_response({"error": e})
+
 @aiohttp_jinja2.template("config.html")
 async def config(request):
     # return web.Response(
@@ -143,6 +154,7 @@ def init_func(argv):
 
     APP.router.add_post("/api/messages", messages)
     APP.router.add_get("/dashboard", dashboard)
+    APP.router.add_get("/jsonreply", jsonreply)
     APP.router.add_get("/config", config)
     return APP
 
@@ -153,3 +165,9 @@ if __name__ == "__main__":
         web.run_app(APP, host="0.0.0.0", port=CONFIG.PORT)
     except Exception as error:
         raise error
+
+#docker run --rm -it -p 3978:3978 -v /home/bhargavi/Documents/Masterthesis_bot2021/src/database:"/app/database" python-d3d-docker-bot
+
+#docker build -f Dockerfile_dev -t python-d3d-docker-bot --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) .
+
+#docker build -f Dockerfile -t python-d3d-docker-bot .
