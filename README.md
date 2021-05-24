@@ -24,12 +24,12 @@ This is a productivity bot designed to support documentation of prominent design
 7. The below steps should be done for a unique Microsoft teams instance
 * Navigate to **teamsAppManifest** folder to update the `manifest.json`. All occurances of `<<YOUR-MICROSOFT-APP-ID>>` should be replaced with the __Microsoft App      ID__ that was crreated during Bot Framework registration in step 4
 * All the files in the **teamsAppManifest** directoory should be zipped to create `manifest.zip`
-*  Upload the `manifest.zip`in Microsoft teams using the _upload a custom app_ option
+*  Upload the `manifest.zip` in Microsoft teams using the _upload a custom app_ option
 8. Install all dependencies by running `pip3 install -r requirements.txt` in a new terminal from the right folder
 9. Navigate to `Masterthesis_bot2021/src/app.py` and open `app.py`, bring up another new terminal to run `pip3 app.py` or press `ctrl+F5` 
 
 ## Steps to run D3driver as a docker container
 
 1. Perform steps 1-7 as explained previously
-2. docker run --rm -it -p 3978:3978 -v /Masterthesis_bot2021/src/database:"/app/database" python-d3d-docker-bot
+2. Navigate to `src` folder in the folder in a termina and run the following command `docker run --rm -it -p 3978:3978 -v /Masterthesis_bot2021/src/database:"/app/database" python-d3d-docker-bot`
 
