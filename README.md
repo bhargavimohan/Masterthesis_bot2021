@@ -22,7 +22,7 @@ This is a productivity bot designed to support documentation of prominent design
 6. Install all dependencies by running `pip3 install -r requirements.txt` in a new terminal from the right folder
 7. Navigate to `config.py` to change the **Microsoft App ID** & **App password** as provided during Bot Framework registration in Step 4
 8. The below steps should be done for a unique Microsoft teams instance
-* Navigate to **teamsAppManifest** folder to update the `manifest.json`. All occurances of `<<YOUR-MICROSOFT-APP-ID>>` should be replaced with the _Microsoft App      id_ that was crreated during Bot Framework registration in step 4
+* Navigate to **teamsAppManifest** folder to update the `manifest.json`. All occurances of `<<YOUR-MICROSOFT-APP-ID>>` should be replaced with the __Microsoft App      id__ that was crreated during Bot Framework registration in step 4
 * All the files in the **teamsAppManifest** directoory should be zipped to create `manifest.zip`
 *  Upload the `manifest.zip`in Microsoft teams using the _upload a custom app_ option
 9. Navigate to `Masterthesis_bot2021/src/app.py` and open `app.py`, bring up another new terminal to run `pip3 app.py` or press `ctrl+F5` 
