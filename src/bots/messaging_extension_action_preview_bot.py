@@ -56,7 +56,6 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                     cardsentdate = year + "-" + month + "-" + day
                     result = database.find_channel_exists(channel_id)
                     if(len(result) == 0):
-                        # database.insert_channel()
                         database.insert_channel(channel_id,channel_name,vphase,member,cardsentdate)
                         reply = MessageFactory.text(
                             f"{turn_context.activity.from_property.name} chose '{vphase}' phase for this channel."
@@ -71,7 +70,6 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                         await turn_context.send_activity(reply)
 
             elif text_command == D3driverinitcommand:
-                        #vphase = 'Model-based'
                 result = database.find_channel_exists(channel_id)
                 if(len(result) == 0):
                     card = create_vphase_card_editor()
@@ -88,12 +86,6 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
                             channel_name)
                     )
                     await turn_context.send_activity(reply)
-                # new_activity = MessageFactory.text("This card has been disable")
-                # new_activity.id = response_id.id
-                # update_result = await turn_context.update_activity(new_activity)
-
-
-
             elif text_command == D3driverdelcommand:
                 database.delete_channel(channel_id)
                 database.delete_decision(channel_id)
@@ -124,11 +116,9 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
         if turn_context.activity.conversation.conversation_type != 'personal':
             channel_id = turn_context.activity.channel_data['channel']['id']
             conversation_id = turn_context.activity.conversation.id #to distinguish 'Generals' of different teams
-            # TODO: If channel in initialzed table, then continue with normal card, else show error card
             channel_name = turn_context.activity.conversation.name
             if channel_name is None:
                 channel_name = 'General'
-            #vphase = value["Choices"]
             result = database.find_channel_exists(channel_id)
             if(len(result) == 1):
                 if(result[0]["channel"]["vphase"] == 'Architecture Design'):
@@ -188,12 +178,9 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
             a="Mechanical design decisions"
             b="Electrical design decisions"
             c="Software design decisions"
-
-
         user_text1 = action.data["Question1"],
         user_text2 = action.data["Question2"],
         user_text3 = action.data["Question3"],
-
         if(user_text1[0] == ''):
             a = ''
         if(user_text2[0] == ''):
@@ -211,7 +198,6 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
              c,
              memberid,
         )
-
         # db entries
         if(result[0]["channel"]["vphase"] == 'Architecture Design'):
             database.insert_decision(channel_id,channel_name,memberid,decisiondate,a,user_text1,b,user_text2,c,user_text3)
@@ -219,12 +205,9 @@ class TeamsMessagingExtensionsActionPreviewBot(TeamsActivityHandler):
             database.insert_decision(channel_id,channel_name,memberid,decisiondate,a,user_text1,b,user_text2,c,user_text3)
         elif(result[0]["channel"]["vphase"] == 'Implementation'):
             database.insert_decision(channel_id,channel_name,memberid,decisiondate,a,user_text1,b,user_text2,c,user_text3)
-        
-
         if (user_text1[0] or user_text2[0] or user_text3[0] != ''):
             message = MessageFactory.attachment(card)
             await turn_context.send_activity(message)
-    
             return MessagingExtensionActionResponse()
         else:  
             reply = MessageFactory.text(

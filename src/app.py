@@ -1,6 +1,9 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
+# The code is based on the boillerplate code available in the official documentation available from Microsoft called 
+# Bot builder samples - https://github.com/microsoft/BotBuilder-Samples/tree/main/samples/python/53.teams-messaging-extensions-action-preview
+
 import json
 import sys
 import traceback
@@ -100,9 +103,6 @@ async def messages(req: Request) -> Response:
 
 @aiohttp_jinja2.template("dashboard.html")
 async def dashboard(request):
-    # return web.Response(
-    #     text='<h1>Hello!</h1>',
-    #     content_type='text/html')   
     try:
         param = request._rel_url.query_string
         param = param.strip('channelid=')
@@ -115,10 +115,7 @@ async def dashboard(request):
         return e
 
 
-async def jsonreply(request):
-    # return web.Response(
-    #     text='<h1>Hello!</h1>',
-    #     content_type='text/html')   
+async def jsonreply(request): 
     try:
         param = request._rel_url.query_string
         param = param.strip('channelid=')
@@ -166,8 +163,4 @@ if __name__ == "__main__":
     except Exception as error:
         raise error
 
-#docker run --rm -it -p 3978:3978 -v /home/bhargavi/Documents/Masterthesis_bot2021/src/database:"/app/database" python-d3d-docker-bot
 
-#docker build -f Dockerfile_dev -t python-d3d-docker-bot --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) .
-
-#docker build -f Dockerfile -t python-d3d-docker-bot .

@@ -1,4 +1,4 @@
-#%%
+
 from tinydb import TinyDB, Query, where
 from tinydb.operations import delete
 import os
@@ -21,7 +21,6 @@ db = TinyDB(DATA_PATH)
 channelstable = db.table('Initializedchannelsanddata')
 decisionstable = db.table('Designdecisions')
 ch = Query()
-#%%
 
 def get_channel_details(channel_id):
     query_result = channelstable.search(ch.channel.channelid == channel_id)
@@ -31,7 +30,7 @@ def get_channel_details(channel_id):
         result = None
 
     return result
-#%%
+
 
 def get_all_decisions(channel_id=None):
     if channel_id is None:
@@ -45,14 +44,13 @@ def get_all_decisions(channel_id=None):
             result.append(_decision['decisions'])
 
     return result
-#%%
 
 
 def get_all_entries(table_name):
     _table = db.table(table_name)
     result = _table.all()
     return result
-#%%
+
 def get_all_database():
     _tables = db.tables()
     result = {}
@@ -61,7 +59,7 @@ def get_all_database():
         result[table_name] = _table.all()
 
     return result
-#%%
+
 
 def insert_decision(channel_id,channel_name,memberid,decisiondate,a,user_text1,b,user_text2,c,user_text3):
     decisionstable.insert({'decisions': {'channelid': channel_id, 'name' : channel_name , 'membername' : memberid, 

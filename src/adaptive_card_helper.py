@@ -196,7 +196,7 @@ def create_dc_adaptive_card_editor(
                         },
                         {
                             "type": "TextBlock",
-                            "text": "* ***Design characteristics & Enablers decisions:*** Decisions related to  design characteristics for the architectural entities that ensures that the design characteristics are feasible. Design enablers such as models (physical and analytical), design heuristics, etc. are decided.",
+                            "text": "* ***Design characteristics & Enablers decisions:*** Decisions related to  design characteristics for the architectural entities that ensures that the design characteristics are feasible. Design enablers such as models (physical and analytical), design heuristics, etc.",
                             "isSubtle": True,
                             "wrap": True
                         },
@@ -318,7 +318,7 @@ def create_imp_adaptive_card_editor(
                         },
                          {
                             "type": "TextBlock",
-                            "text": "* ***Software design decisions:*** Decisions related to digital information process like logical operations, algorithms, database etc.",
+                            "text": "* ***Software design decisions:*** Decisions related to digital information process like logical operations, algorithms, programming languages, database etc.",
                             "isSubtle": True,
                             "wrap": True
                         }
@@ -433,6 +433,7 @@ def create_adaptive_card_preview(
                 },
                 {
                     "text": "{}".format(user_text1), 
+                    "wrap": True,
                     "type": "TextBlock", 
                     "id": "Question1",
                     "weight": "bolder"
@@ -448,6 +449,7 @@ def create_adaptive_card_preview(
                 },
                 {
                     "text": "{}".format(user_text2), 
+                    "wrap": True,
                     "type": "TextBlock", 
                     "id": "Question1",
                     "weight": "bolder"
@@ -461,6 +463,7 @@ def create_adaptive_card_preview(
                 },
                 {
                     "text": "{}".format(user_text3), 
+                    "wrap": True,
                     "type": "TextBlock", 
                     "id": "Question1",
                     "weight": "bolder"

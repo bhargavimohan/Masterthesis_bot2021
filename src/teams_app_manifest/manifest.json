@@ -25,7 +25,7 @@
   "accentColor": "#FFFFFF",
   "configurableTabs": [
     {
-      "configurationUrl": "https://3872f928ef99.ngrok.io/config",
+      "configurationUrl": "https://b56bd9479562.ngrok.io/config",
       "canUpdateConfiguration": true,
       "scopes": [
         "team"
