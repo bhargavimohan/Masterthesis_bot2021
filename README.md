@@ -31,5 +31,5 @@ This is a productivity bot designed to support documentation of prominent design
 ## Steps to run D3driver as a docker container
 
 1. Perform steps 1-7 as explained previously
-2. Navigate to `src` folder in the folder in a termina and run the following command `docker run --rm -it -p 3978:3978 -v /Masterthesis_bot2021/src/database:"/app/database" python-d3d-docker-bot`
+2. Navigate to `src` folder in the folder in a terminal and run the following command `docker run --rm -it -p 3978:3978 -v /Masterthesis_bot2021/src/database:"/app/database" python-d3d-docker-bot`
 
