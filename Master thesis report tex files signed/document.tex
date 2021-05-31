@@ -1,0 +1,279 @@
+\documentclass[a4paper, 
+	twoside, 
+	12pt, 
+	toc=bibliographynumbered, 
+	numbers=noendperiod, 
+	ngerman,
+	openany, 
+	fleqn]{scrbook}
+
+\input{common/Data}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Schrift / Sprache
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%,UKenglish,USenglish,english,american
+\usepackage[american]{babel}
+\usepackage[utf8]{inputenc} 
+\usepackage{mathptmx}
+\usepackage[scaled=0.92]{helvet}
+
+\usepackage[nolist]{acronym}
+
+
+
+\setlength\emergencystretch{5em}
+\usepackage{microtype}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Seitenlayout
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{scrpage2}
+
+\pagestyle{scrheadings}
+\clearscrheadfoot
+\automark[chapter]{chapter} %Kapitelname oben innen	
+\renewcommand*{\headfont}{\normalfont}
+\ohead{\pagename~\pagemark}
+\rehead{\chaptername~\thechapter}%Kapitelnummer   	
+\lohead{\headmark}	%Eintrag: Kopfzeile rechte Seite links oben 															  
+\renewcommand*{\chaptermarkformat}{}					
+\setheadsepline{0.2pt} %Trennlinie zwischen Kopf und Textkörper
+\addtokomafont{pageheadfoot}{\small\rmfamily}%Seitenkopf- und Fußbeschriftung in small
+\renewcommand*{\chapterpagestyle}{scrheadings}	%normaler Kopfzeilenstil für Chapterseiten
+\usepackage[justification=centering]{caption}
+\captionsetup{skip=0.333\baselineskip}
+\usepackage[left=3.0cm,right=3.0cm,top=3.0cm,bottom=2.5cm,includeheadfoot]{geometry} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Überschriften und Inhaltsverzeichnis
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tocloft}%für Inhaltsverzeichnis
+\usepackage{titlesec}%Ändern der überschriften
+
+\usepackage{listings}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\usepackage[justification=centering]{caption}
+\setcounter{secnumdepth}{3}
+\titleformat{\chapter}[hang]{\large\sffamily\bfseries}{\thechapter\quad}{1cm}{}
+\titleformat{\section}[hang]{\fontsize{13pt}{16pt}\selectfont\sffamily\bfseries}{\thesection\quad}{1.2cm}{}
+\titleformat{\subsection}[hang]{\normalsize\sffamily\bfseries}{\thesubsection\quad}{1cm}{}
+\titleformat{\subsubsection}[hang]{\normalsize\sffamily\mdseries}{\thesubsubsection\quad}{1cm}{}
+\addtokomafont{chapter}{\large}
+%\addtokomafont{section}{\fontsize{13pt}{16pt}\selectfont}
+%\addtokomafont{subsection}{\normalsize}
+%\addtokomafont{subsubsection}{\normalsize\mdseries}
+\renewcommand*{\cftchapfont}{}
+\renewcommand*{\cftsecfont}{}
+\renewcommand*{\cftsubsecfont}{}
+\renewcommand*{\cftchappagefont}{}
+\renewcommand*{\cftsecpagefont}{}
+\renewcommand*{\cftsubsecpagefont}{}
+\renewcommand{\cftchapleader}{\cftdotfill{3.0}}
+\renewcommand{\cftsecleader}{\cftdotfill{3.0}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{3.0}}
+
+\setlength{\beforetitleunit}{9pt}
+\setlength{\aftertitleunit}{0pt}
+\titlespacing{\chapter}{0pt}{1.0\beforetitleunit plus0.25\beforetitleunit minus0.25\beforetitleunit}{1.0\aftertitleunit plus0.1\aftertitleunit minus0.25\aftertitleunit} %Abstand. vor und nach
+\titlespacing{\section}{0pt}{1.0\beforetitleunit plus0.25\beforetitleunit minus0.25\beforetitleunit}{1.0\aftertitleunit plus0.1\aftertitleunit minus0.25\aftertitleunit} %Abstand. vor und nach Section
+\titlespacing{\subsection}{0pt}{0.8\beforetitleunit plus0.1\beforetitleunit minus0.1\beforetitleunit}{0.8\aftertitleunit plus0.1\aftertitleunit minus0.25\aftertitleunit}	%Abstand vor und nach Subsection
+\titlespacing{\subsubsection}{0pt}{0.6\beforetitleunit plus0.1\beforetitleunit minus0.1\beforetitleunit}{0.6\aftertitleunit plus0.1\aftertitleunit minus0.1\aftertitleunit}
+\titlespacing{\paragraph}{0pt}{0.4\beforetitleunit plus0.1\beforetitleunit minus0.1\beforetitleunit}{0.5\beforetitleunit}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PDF-Einstellungen Hyperref
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ueberpruefen, ob wir pdflatex ausfuehren (geht nur bei Koma-Klassen)
+\ifpdfoutput
+{
+% PDF wird genutzt
+	
+	\usepackage[pdftex]{graphicx}
+	% eigene Farben für Links:
+  	%\definecolor{myLinkColor}{rgb}{0,0,.5}
+  	%\definecolor{myCiteColor}{rgb}{0,.5,0}
+  	%\definecolor{myFileColor}{rgb}{.5,0,0}
+  	%\definecolor{myURLColor}{rgb}{0,0,1}
+  	% Setzen aller Link-Farben auf Schwarz 
+  	\definecolor{myLinkColor}{rgb}{0,0,0}
+  	\definecolor{myCiteColor}{rgb}{0,0,0}
+  	  	  	\definecolor{myFileColor}{rgb}{0,0,0}
+  	  	  	\definecolor{myURLColor}{rgb}{0,0,0}
+  	\usepackage[pdftex,%
+  	  		plainpages=false,%
+  	  		pdfpagelabels,% Seitenzahl als z.B. 'ii (4 of 40)' anstatt '4 of 40' darstellen
+  	  		colorlinks=true,%
+  	  		linkcolor=myLinkColor,%
+  	  		citecolor=myCiteColor,%
+  	  		filecolor=myFileColor,%
+  	  		urlcolor=myURLColor,%
+  	  		bookmarks,% Lesezeichen erstellen
+  	  		bookmarksnumbered, % Lesezeichen nummeriert wie im Inhaltsverzeichnis
+  	  		breaklinks, % Zeilenumbrüche bei Links erlauben
+  			unicode
+  	  		%pdfpagelayout={TwoColumnRight}% zweiseitiges fortlaufendes Layout
+  	  		]{hyperref}
+}
+{
+% Kein PDF  
+  	\usepackage{graphicx}
+  %	\usepackage{color}
+  	\usepackage[hypertex, 
+  		bookmarks,% Lesezeichen erstellen
+  		bookmarksnumbered, % Lesezeichen nummeriert wie im Inhaltsverzeichnis
+  		breaklinks, % Zeilenumbrüche bei Links erlauben
+  		]{hyperref}
+  \DeclareGraphicsExtensions{.eps,.ps} % Dateiendungen für Grafikdateien
+}    
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Mathe-Pakete
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsfonts} 	% extra math fonts
+\usepackage{amsmath} 	% mathematical formulas
+\usepackage{amssymb} 	% Symbole für Zahlenmengen usw.
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Body
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\baselinestretch}{1.12}
+\parindent0.0cm	% Einrückung bei Absatz auf 0 setzen
+\parskip\medskipamount %Legt den Abstand zwischen den nachfolgenden Absätzen fest
+\setlength{\mathindent}{1.25cm} %Einrückung der Formeln
+
+%% snake-oil für den Satz
+\pretolerance=100           %% Textsatz: interner Parameter zur Steuerung des Zeilenumbruchs
+\tolerance 300              %% 1414 Bewertungsgrenzwert für schlecht umbrochene Zeilen
+\hfuzz=0.2pt                %% Grenze, ab der eine overfull hbox gemeldet wird
+\vfuzz=0.2pt                %% Grenzwert, ab dem die Überfüllung einer \vbox protokolliert wird
+\hbadness 1414              %% Grenzwert für »schlechte« Zeilen, bzw. Boxen
+\vbadness	1000            %% Grenzwert für eine »schlechte« \vbox 
+\emergencystretch 1em       %% zusätzlicher dynamischer Leerraum
+\hyphenpenalty=30           %% Strafpunkte bei Silbentrennung über Absatz hinweg
+\widowpenalty=100000        %% falls letzte Zeile auf neue Seite gebrochen wird.
+\clubpenalty=100000         %% wenn erste Zeile eines Absatzes auf alter Seite bleibt.
+\doublehyphendemerits=50    %% Aufeinanderfolgende Silbentrennungen eher vermeiden. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Bilder / Farben etc.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}		% Einbinden von Bildern / Enhanced support for graphics
+\usepackage{color}			% Colour control for LaTeX documents.
+\usepackage[tight,TABTOPCAP]{subfig}%Figures broken into subfigures, Alternative "subcaption"
+%\usepackage{wallpaper}		% Easy addition of wallpapers (background images) to LaTeX documents, including tiling
+% \usepackage{lscape}		% Place selected parts of a document in landscape
+% \usepackage{rotating} 	% Rotation tools, including rotated full-page floats
+
+%Name für Bildunterschriften/Tabellenüberschriften
+\renewcaptionname{ngerman}{\figurename}{\itshape Bild}
+\renewcaptionname{ngerman}{\tablename}{\itshape Tabelle}
+
+%Format der Nummerierungen
+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
+\renewcommand{\theequation}{\arabic{chapter}-\arabic{equation}} 
+
+% Formatierung der Bildunterschrift im Blocksatz (nicht zentriert) und mit zusätzlichem Tab nach dem Label
+\DeclareCaptionFormat{myformat}{#1#2\quad#3}
+\captionsetup{singlelinecheck=false,justification=centering,font=it, labelfont=it,format = myformat}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TEST
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\usepackage{minitoc}% für extra Inhaltsverzeichnisse
+
+\usepackage{bibgerm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beginn Dokument
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\frontmatter
+
+\input{common/Titlepage}
+
+\input{common/Sperrvermerk}
+
+\input{common/Erklaerung}
+
+\input{content/00_Abstract/Abstract-German}
+\input{content/00_Abstract/Abstract-English}
+
+\restoregeometry
+
+\mainmatter	%Beginn Hauptteil%
+
+\mainmatter	%Beginn Hauptteil%
+
+\tocloftpagestyle{scrheadings}
+\ihead{\contentsname}
+\sffamily %Inhaltsverzeichnis in Arial	
+\renewcommand*{\cftmarktoc}{} % Fehler bei der Implementierung fügt sonst ein Leerzeichen hinter "Seite" ein und die Kopfzeile wird ja eh neu definiert
+\setlength{\cftbeforetoctitleskip}{15pt} % 27-12pt: tocloft fügt immer eine Leerzeile ein!
+\setlength{\cftaftertoctitleskip}{1cm}
+\renewcommand{\cftaftertoctitle}{\hfill{\cfttoctitlefont\mdseries\normalsize \pagename}}
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}	
+{\let\bfseries\mdseries	
+\tableofcontents 
+} %Erstellung des Inhaltsverzeichnisses
+\newpage	
+\listoffigures
+\newpage
+\listoftables
+\newpage
+\lstlistoflistings
+\cleardoublepage
+
+%Kopfzeile wieder zurücksetzen
+\rehead{\chaptername~\thechapter}%Kapitelnummer   	
+\lohead{\headmark}	%Eintrag: Kopfzeile rechte Seite links oben 								
+\rmfamily
+
+\renewcommand{\chapterautorefname}{Chapter}
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Subsection}
+\renewcommand{\subsubsectionautorefname}{Subsubsection}
+
+\input{content}
+
+\bibliographystyle{literature/myalphadin}
+\bibliography{literature/literature}
+
+\rmfamily
+%\input{content/.../Appendix}
+
+
+\end{document}
