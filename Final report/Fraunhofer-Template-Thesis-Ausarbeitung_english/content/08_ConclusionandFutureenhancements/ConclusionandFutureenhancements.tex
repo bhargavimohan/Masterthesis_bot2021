@@ -1,0 +1,49 @@
+\chapter{Conclusion and Future Enhancements}
+\label{chap: cafe}
+
+In conclusion, D3driver has been successful in reaching the goals defined for this thesis implementation. D3driver was meant to ease the design decision making process for a multi-disciplinary team like mechatronics and the bot renders all the needful functionalities to accomplish the targets. 
+
+The thesis embarked with a notion to stress the emphasis of employee motivation especially towards documentation during a collective chat discussion in an inter-disciplinary team. Although, there were two other objectives put forward for the sake of employee motivation during the proposal phase, the scope and time limitation of the thesis had to be considered. The objective with the highest priority has been successfully implementing in the course of this thesis. The thesis in it's initial phases established the fact that collaboration is an essential component of any team especially when there are members from various domains. Teamwork, partnership and co-ordination normally happens over a collaboration tool and if that serves as an important aspect, then documenting chief facts and observations in the process is also equally important. The importance of documentation in mechatronics was discovered in parallel. At that moment, there was no system in place to handle the documentation functionality as per the need. Henceforth, it made sense to define what is lacking and what needs to be done further. This was followed by defining a problem statement. Once the problem was described, objectives and solution ideas were aligned and therefore the mission was to develop a bot preferably in MS Teams to motivate users upon documenting design decisions of mechatronics in a group chat. To this end, the background study began. The literature survey of mechatronics systems, processes, collaboration tools, decision making in mechatronics and bots in MS teams helped to channelize the research and implementation in the right direction. Thereafter, four prominent stages broke out which is as follows. 
+
+
+At this point, this thesis work had the right foundation to go ahead with the first stage of evaluating existing solutions to the described problem. This phase was more of a research task to determine the pros and cons of already existing bots in a couple of known collaboration tools. This involved establishing a set of evaluation criteria based upon the requirements and objectives of this thesis work. The bots were installed and tested to see which evaluation criteria was fulfilled, followed up a summary report. This stage formed a great groundwork for further stages.  
+
+The next two stages, design and implementation of a motivational bot represent the crux of this work. After some study on what technologies and applications would best suit the thesis specifications, the name, logo, architecture, workflow and approaches to implementation originated and the same has been explained. During the implementation stage, bot development guidance provided by official Microsoft documentation helped in prototyping D3driver and it's features. A detailed report on D3driver's installation, usage, components, intricate working has been presented. In addition, interested users can also take a look at the GitHub repository\footnote{https://github.com/bhargavimohan/Masterthesis\_bot2021} for source codes and user manual.
+
+The final stage in this work was the verification and validation of D3driver. This stage first verifies to see if the bot meets all the required specifications and confirms that the bot can be made available to the users. D3driver was reviewed against the same set evaluation criteria that was established to review existing bots. Next, validation was done by having two members from different domains simulate engineering scenarios where design decision documentation was done with the use of D3driver. The results of this demonstration was logged and submitted in this report. With this, all the four stages of bot prototyping has been victoriously completed.
+
+\section{Future enhancements}
+
+Future work on D3driver can persevere in 2 different paths. One in which D3driver's current functionalities can be upgraded and another direction would be to add new innovations (other than documentation functionality) altogether. The latter has already been proposed in Chapter \ref{chap: into}. A clear conception on two more functionalities in the area of employee motivation, their problem description, objectives and solutions has also been suggested in sections \ref{pd} , \ref{obj} and \ref{si} respectively. These two were marked as secondary or optional goals in this thesis. 
+
+
+For the purpose of improving the current features of D3driver, the following points can be noted.
+
+\begin{itemize}
+\item Introducing another option to the list of initialization options. Right now, there are 3 phases of V-model as initialization choices, however there could be a ``custom" choice and introducing ``custom" sub-options. With this, the users will be able to label their own decision names and will be able to document anything other than just design decisions. 
+
+\item Designing graphs and statistics in the D3driver tab to see the total number of decisions, highest number of decisions taken by a particular member, highest number of decision types discussed and a few more useful facts and figures depending on the actual requirement in a team. 
+
+\item The orientation of the decisions displayed in the D3driver tab can be visualized in a more refined way. There can be different layouts for each decision type with their own search and sort functionalities. This would further make the search feature optimized when there are thousands of decisions discussed. 
+
+\item The sort functionality can also be further enhanced by introducing more sort by options like \textit{sort by members} and \textit{sort by decision type}. This would help users to generate a precise report of decision types or decision makers. For instance - \textit{sort by members} functionality would line up all the decisions taken by a particular member and when this is on display, the users can use ``Export as PDF" button to generate this report before it is refreshed.
+
+\item At present, D3driver can be added to any channel. But this can be extended  to ``\textit{Add to meeting}" to document decisions pertaining to V-model design phases while the meeting is going on. This can help the users maintain a separate thread of design decision discussions exclusively during meetings. 
+
+\item The database structure can be made more advanced by using a more sophisticated database other than TinyDB to handle huge records to enable scalability in production environment.
+
+\item Finally, making D3driver a production-ready bot to deploy it in Microsoft azure is a major upgrade. This will result in an implicit performance upgrade of not having to use \textit{ngrok} technology and can avoid frequent \textit{ngrok url} update in the code. This would also make the bot be available to public for usage. 
+
+
+\end{itemize}
+
+Apart from the above ideas, there are some minor design advancements to be considered:
+
+\begin{itemize}
+\item A welcome card with greetings and detailed instructions on the available commands and their usage can be designed to be sent on bot start up without any user requiring to invoke the bot.
+
+\item A special card asking deletion confirmation can be designed after using the \textit{``del"} command. Currently, the ``del" command would erase all the data when used without a warning.
+
+\item The current version of adaptive cards in MS teams has a limitation on the radio button graphical appearance. It is visible only to the user making an option during channel initialization and the radio button appearance is not visible to other members who aren't making the choice (however, appropriate messages appear immediately on the choices made for users who do not make the initialization choice). Hence, when an update on the version of adaptive card is available, changes to reflect this design improvement can be considered. 
+\end{itemize}
+

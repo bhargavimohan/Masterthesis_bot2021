@@ -1,0 +1,91 @@
+\chapter{Evaluation of existing bots}
+\label{chap: eoeb}
+The first step towards assisting orchestration of decisions(the term decisions always mean design decisions) of a mechatronics environment in collaboration tool is to screen the existing bots to check if there are any bots currently, that are capable of resolving the problem description as discussed in section \ref{pd}. The collaboration tools under this investigation are SLACK and MS Teams because of their global acceptance and usage. The bots available in these two tools would be under scrutiny. The end purpose of this phase is to examine the functionality and features of the available bots that exclusively handle topics like employee motivation(preferably towards documentation), decision management, decision documentation, message tagging/labeling, decision summary display or decision summary download.
+
+\section{Requirements description}
+\label{rd}
+This thesis has two segments, 1). Research and 2). Implementation. The research involves identifying the bots that fulfills objectives and resolves the problem description of this thesis. The implementation segment depends on the findings of the research and is discussed in the further sections. An immediate step in the research segment is to list the \textbf{Requirement characteristics} for further examination and implementation. The existing bots are checked to see if they poses one or more Requirement characteristics that are listed below. If there already exists a bot with all the Requirement characteristics as it's features, then the bot should be improved by adding new features and functionalities i.e the optional solution ideas as discussed in section \ref{si}. As a final step, if there as no bots at present that suit the below list, a new bot is implemented that meets all the Requirement characteristics. One implicit and obvious Requirement Characteristic of this thesis is ``employee motivation" towards documenting vital decisions. Hence, each of the below characteristic has been carefully formulated to finally achieve this bigger objective.
+\begin{enumerate}
+\item The bot should be operational within MS teams(although SLACK bots are also studied, it is only to check if there exists a better feature that can be adopted to build a similar bot inside MS Teams).
+
+\item The bot should be able to provide decision template with valid decision tags/labels. If the suggestions by the bot is specific to V-model design phases as per VDI standards, then it's a plus.
+\item The bot should be capable of separating the normal conversations from the important design decisions in the chat window.
+\item The bot should provide a functionality to view all the design decisions taken during a discussion by means of an associated tab/dashboard. In short, a decision summary should be offered. 
+\item The bot should be able to provision a download option. A copy of the decision summary should be downloadable in any readable format(.txt, .docx or .pdf)
+\item The bot should also be capable of retrieving metadata(raw data) from the database. Working with raw data might be beneficial for some teams. 
+\end{enumerate}
+
+ 
+
+
+\section{Existing bots and their features}
+In this section, a review of 3 bots each in Slack and MS Teams is presented to explain how they help the users in documenting design decisions. The strategy to select the below bots was — In the bot directory of the respective collaboration tools, topic related keywords  such as ``decision", ``documentation", ``summarization", ``motivation" and ``message tagging" were entered. The most applicable bots popped up. The bot description of all the bots were checked and the most relevant bots whose features were close enough to the Requirement characteristics qualified for the evaluation.
+
+The keyword ``motivation" fetched bots that assisted users in peer recognition and rewarding co-workers(which is also considered as optional objective). These bots are not evaluated for the time being due to it's lesser priority. 
+
+\subsection{Slack bots}
+\label{slackbots}
+\begin{enumerate}
+\item \textbf{tilda\footnote{https://tildachat.com/}} — A bot whose main feature is chat summarization. The main idea here is to group the incoming messages as questions, answers, ideas, information, action etc. The users are required to use the inbuilt commands to notify the bot what type of message are they exchanging in a group. For instance, the commands are /$\sim$addquestion, /$\sim$addanswer , /$\sim$addinfo, /$\sim$addanswer. These commands are understood by the bot and it groups the user messages accordingly and gives a summary upon using another command —
+/$\sim$currentsummary. The summary contains the people involved in the chat, the number of messages, date and the time.
+The summaries are posted as messages by the bot in the same group and all the members in the group can refer the summary up to a certain time. These summaries may disappear later because slack offers to access messages only upto 10,000 recent messages and the older messages can be retrieved by choosing a premium Slack version. Therefore, these summaries need to be screenshot explicitly to save them to the local system permanently.
+
+\item  \textbf{summarize bot\footnote{https://www.summarizebot.com/}} —
+The feature of this bot is simplistic. It is only capable of summarizing any public web link within a group chat or individual chat. The bot can also summarize documents, images etc. The command used is /summarize [url]. Keyword extraction, key fragments list, desired summary size, downloadable results are its key features. The reason to review this bot was to understand the summarization technique used in this bot to actually see how it differs from the previous one.
+
+\item  \textbf{decisionbot\footnote{https://www.decisionbot.io/}} —
+As the name suggests, this bot helps in quicker decision making in a group conversation. This bot does separate the normal messages from decision related messages and also stores them all in one place to some extent. A user can use the decision making template by initiating the command— /decision and fill the details such as title, description, decision maker, due date and submit the form. A new channel with the decision title gets automatically created and the users are allowed to edit the details in that channel. Other members can also be invited to join the conversation. The ``Make decision” option will also be available to the intended person making the decision. Once the legitimate person submits the decision, the bot posts the results of the decision on the channel and that channel is then archived. However, the discussions around that specific decisions are brows-able even later in that particular channel. Additionally, there is another tab in the bot channel that shows a history of all decisions, a pictorial representation of open and closed decisions over time.
+
+\end{enumerate}
+
+
+\subsection{MS Teams bots}
+
+MS teams does not have any bots to handle chat summarization, hence no bots that could help in documenting messages in chats. There were a few bots that could potentially isolate the important messages in a place within the tool and they are discussed below.
+
+\begin{enumerate}
+\item \textbf{we decide\footnote{https://appsource.microsoft.com/en-cy/product/office/wa200001566?tab=overview}} —
+This bot is very similar to \textbf{decisionbot} discussed in section \ref{slackbots}. This bot provides a decision making form to a user who can fill the title, description, assigned date, due date and assign it to one of the members in the group. The responsible person either approves or rejects the decision. Additionally, there are text-boxes to add action items in case of approval and rejection. Files can also be attached for any required reference. This bot segregates important messages via having separate decision forms and accumulates the messages via in one place using Microsoft tabs.
+
+\item  \textbf{perfony\footnote{https://appsource.microsoft.com/en-us/product/office/wa104381418?tab=overview}} —
+This is also a bot that helps decision making in a team. It has a complex UI and features. The decision can be created with the assignee details. This decision form can be created in the form of a folder and can create further sub-folders for related decision items. There are 3 forms of views namely — folder view, kanbann view, Gnatt view. There are comment sections, attachment sections, bookmark option, download options, archive options, and also a status bar that can be dragged laterally to indicate the state of the current decision topic. The status bar indicates how much percentage of the decision making task is completed and how much is remaining. There are many more features that are not in interest of this thesis requirement hence are not listed here.
+
+\item  \textbf{approve simple\footnote{https://appsource.microsoft.com/en-nz/product/office/WA104381812?tab=Overview}} —
+This bot was considered for the review because it claimed that it accelerated decision making in a corporate environment. Screening the the bot revealed that it was more useful for employees in the managerial roles and not much useful for decision making or documenting messages in group conversations. It is used as an approval tool for managers or directors in a 1:1 conversation with the bot. The user should type a command like \textit{My Approvals} and the bot displays a queue of all the approvals in different contexts like leaves, time-sheet, budget etc. The manager can approve or reject stating the reason(optional).
+\end{enumerate}
+
+\section{Evaluation criteria}
+\label{evalcrit}
+This section tabulates the above introduced bots against the \textbf{Requirement characteristics} discussed in section \ref{rd}. The Requirement characteristics have been manifested to constitute the \textbf{``Evaluation Criteria"} to measure the appropriateness of the existing bots with regards to this thesis requirements. Every  criterion is marked YES if the bot has a particular criterion as it's feature, it is marked NO if the bot does not have a criterion as it's feature and it is marked PARTIALLY YES if the bot somewhat meets a criterion but has a slight variation in it's functionality. 
+
+\textit{Note: The evaluation criteria in the below table is introduced in the same order as the requirement characteristics in section \ref{rd} so that it is easier for the readers to refer and relate each criterion with it's corresponding characteristic.}
+
+\begin{table}[h]
+ \centering
+\resizebox{17cm}{!}{%
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+ \textbf{Evaluation criteria}&  \textbf{tilda}&  \textbf{summarize bot}&  \textbf{decision bot}&  \textbf{we decide}&  \textbf{perfony}& \textbf{approve simple}  \\ \hline
+ Workspace - MS Teams&  NO&  NO&  NO&  YES&  YES& YES  \\ \hline
+ Message tagging/labelling(VDI specific)&  PARTIALLY YES&  NO&  NO&  NO&  NO& NO  \\ \hline
+ Design decision management&  YES&  NO& YES &  YES& YES & NO \\ \hline
+ Design decision documentation&  PARTIALLY YES&  NO& YES & YES & PARTIALLY YES & NO \\ \hline
+ Design decision knowledge management&  PARTIALLY YES&  NO& PARTIALLY YES &  NO & NO  &  NO\\ \hline
+ Easy metadata retrieval &  NO & NO & NO & NO & NO & NO \\ \hline
+\end{tabular}
+}
+\captionsetup{justification=centering}
+\caption{Summary of evaluated bots against the evaluation criteria
+\label{ec}}
+\end{table}
+
+\section{Discussion and Summary}
+Based on the evaluation of the existing bots, there is no bot currently available in MS teams that satisfies all the Requirement characteristics. There are a couple of decision management bots that also provide documentation of decisions but do not provide decision templates that are specific to V-model design phases rather a very general category of ``decisions" documentation is possible. The knowledge management and data retrieval criteria is barely addressed by the existing bots. 
+
+There are some bots that require the users to explicitly pick a decision template every time a decision has to be made. These templates are independent of the previous decisions and all the details like the current date, due date, decision name , type and decision maker's name has to be filled from scratch. If the users want to continue any discussions around one decision it is not possible inside the template. By choosing the another template the thread is lost. All these templates can not be posted inside a group but it will be present is a different tab away from the conversation window. The actual requirement is to have a template that can be embedded within the asynchronous group chat so that the a thread can be maintained as well as there is clear distinction of common messages and messages coming from a pre-defined template, the quest was for such a capability in a bot. 
+
+
+Among the examined bots, ”tilda” that is available on Slack seems to be the closest that has potential to tackle some of the requirement characteristics of this thesis topic. This bot has a general category "Decisions" that can be documented but nothing related to V-model specific decision topics. Another drawback of this bot is whenever a decision has to be made, a long command has to be typed and hence it is not a sound solution. The usage of these commands currently is too much action for the users. It can make the users exhausted and not want to use the bot. Hence, this difficulty should be reduced or eliminated in the bot that is about to be built. 
+
+Therefore, considering the week points in all the evaluated bots as well as the requirement characteristics that is necessary to reach the goals of this thesis, a new bot has to be developed. The bot should provide a template of pre-defined decision type. The date, name of the decision maker and decision names should all be auto-generated. In that way, the users only discuss the respective design decision topic without having to fill name and type of the decision. Additionally, bot should provide the best possible means to keep track of the previous decisions to be able to continue the thread within the chat window. This is achieved by having the decisions posted by the bot inside the chat window. Furthermore, the bot has to make the usage of commands seamless and effortless. That way, the users are motivated to use the bot without spending too much time just on the commands. Furthermore, a display of all the decisions present in chat window should also be present in the form of a summary. A design and implementation of such a bot is presented in the following chapters.
+
